@@ -32,3 +32,5 @@ spring:
 mybatis:
   mapper-locations: mapper/*Mapper.xml
   type-aliases-package: org.java.entity #自动给实体类起别名
+
+  #54546465
