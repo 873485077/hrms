@@ -2,9 +2,33 @@ server:
   port: 9090
 
 spring:
-  datasource:
+  datasource: #数据源配置
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/hrms
     username: root
     password: root
-
+    tomcat:
+      max-idle: 100 #最大的空闲连接数
+      min-idle: 10 #最小的空闲连接数
+      max-active: 100 #最大激活连接数，若取值为20，表示同时最多有20个数据库连接,一般把maxActive设置成可能的并发量
+      max-wait: 10000 #最大等待毫秒数，若取值-1，表示无限等待，直到超时为止
+  thymeleaf:
+    encoding: UTF-8
+    cache: false #关闭缓存
+    mode: LEGACYHTML5
+  servlet:
+    multipart:
+      max-file-size: 1MB #限制上传单个文件大小
+      max-request-size: 10MB #限制总上传大小
+  mail:
+  username: 873485077@qq.com
+  password: bjxsvoaioijjbbeh
+  host: smtp.qq.com
+  properties:
+    mail:
+      smtp:
+        ssl:
+          enable: true
+mybatis:
+  mapper-locations: mapper/*Mapper.xml
+  type-aliases-package: org.java.entity #自动给实体类起别名
