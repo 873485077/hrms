@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" >
+    <title>Title</title>
+    <LINK th:href="@{'/css/bootstrap.min.css'}" type="text/css" rel="stylesheet">
+    <LINK th:href="@{'/css/my.css'}" type="text/css" rel="stylesheet">
+    <script th:href="@{'/js/bootstrap.min.js'}"></script>
+</head>
+<body>
+<div class="container col-md-10 col-md-offset-1">
+    <table class="table table-bordered table-striped table-hover">
+        <tr>
+            <th>合同编号</th><th>合同名称</th><th>员工姓名</th><th>部门</th><th>合同状态</th><th>是否转正</th><th>操作</th>
+        </tr>
+        <tr th:each="j,st:${list}">
+            <td th:text="${j.contract_id}"></td>
+            <td th:text="${j.contract_name}"></td>
+            <td th:text="${j.staff_name}"></td>
+            <td th:text="${j.department_name}"></td>
+            <td th:text="${j.contract_status}"></td>
+            <td th:text="${j.contract_official}"></td>
+            <td>
+                <a th:href="@{|/contract_detail/${j.staff_number}|}" class="btn btn-sm btn-success">查看</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

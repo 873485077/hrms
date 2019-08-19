@@ -1,0 +1,67 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <LINK th:href="@{'/css/bootstrap.min.css'}" type="text/css" rel="stylesheet">
+    <LINK th:href="@{'/css/my.css'}" type="text/css" rel="stylesheet">
+    <script th:href="@{'/js/bootstrap.min.js'}"></script>
+</head>
+<body>
+<div class="container col-md-10 col-md-offset-1">
+    <table class="table table-bordered table-striped table-hover" th:each="l,st:${list}">
+        <tr>
+            <th colspan="4"><h1>基本信息</h1></th>
+        </tr>
+        <tr >
+            <td>工号:</td><td th:text="${l.staff_number}"></td>
+            <td>姓名:</td><td th:text="${l.staff_name}"></td>
+        </tr>
+        <tr >
+            <td>性别:</td><td th:text="${l.sex}"></td>
+            <td>出生日期:</td><td th:text="${l.staff_birthday}"></td>
+        </tr>
+        <tr >
+            <td>籍贯:</td><td th:text="${l.staff_birthplace}"></td>
+            <td>民族:</td><td th:text="${l.staff_nation}"></td>
+        </tr>
+        <tr >
+            <td>婚姻状况:</td>
+            <td>
+                <c th:if="${l.staff_marriage eq  '0'}">未婚</c>
+                <c th:if="${l.staff_marriage eq  '1'}">已婚</c>
+            </td>
+            <td>政治面貌:</td><td th:text="${l.staff_politics}"></td>
+        </tr>
+        <tr >
+            <td>身份证号:</td><td th:text="${l.staff_id_number}"></td>
+            <td></td><td></td>
+        </tr>
+
+        <tr >
+            <th colspan="4"><h1>个人情况</h1></th>
+        </tr>
+
+        <tr>
+            <td>参加工作时间:</td><td th:text="${l.staff_work_date}"></td>
+            <td></td><td></td>
+        </tr>
+        <tr >
+            <td>学历:</td><td th:text="${l.staff_school_record}"></td>
+            <td>毕业学校:</td><td th:text="${l.staff_college}"></td>
+        </tr>
+        <tr >
+            <td>专业:</td><td th:text="${l.staff_major}"></td>
+            <td>毕业时间:</td><td th:text="${l.staff_graduation_date}"></td>
+        </tr>
+        <tr >
+            <td>邮箱:</td><td th:text="${l.staff_email}"></td>
+            <td>电话:</td><td th:text="${l.staff_telphone}"></td>
+        </tr>
+        <tr >
+            <td>住址:</td><td th:text="${l.staff_address}"></td>
+            <td>进入部门时间:</td><td th:text="${l.staff_indepartment_date}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

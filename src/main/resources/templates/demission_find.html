@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" >
+    <title>Title</title>
+    <LINK th:href="@{'/css/bootstrap.min.css'}" type="text/css" rel="stylesheet">
+    <LINK th:href="@{'/css/my.css'}" type="text/css" rel="stylesheet">
+    <script th:href="@{'/js/bootstrap.min.js'}"></script>
+</head>
+<body>
+<div class="container col-md-10 col-md-offset-1">
+    <table class="table table-bordered table-striped table-hover">
+        <tr>
+            <th>员工工号</th><th>员工姓名</th><th>部门</th><th>离职类型</th><th>离职时间</th><th>操作</th>
+        </tr>
+        <tr th:each="n,st:${list}">
+            <td th:text="${n.staff_number}"></td>
+            <td th:text="${n.staff_name}"></td>
+            <td th:text="${n.department_name}"></td>
+            <td th:text="${n.demission_type}"></td>
+            <td th:text="${n.demission_date}"></td>
+            <td>
+                <a th:href="@{|/demission_detail/${n.staff_number}|}" class="btn btn-sm btn-success">查看</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
