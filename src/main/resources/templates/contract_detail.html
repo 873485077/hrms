@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" >
+    <title>Title</title>
+    <LINK th:href="@{'/css/bootstrap.min.css'}" type="text/css" rel="stylesheet">
+    <LINK th:href="@{'/css/my.css'}" type="text/css" rel="stylesheet">
+    <script th:href="@{'/js/bootstrap.min.js'}"></script>
+</head>
+</head>
+<body>
+<div class="container col-md-10 col-md-offset-1">
+    <table class="table table-bordered table-striped table-hover" th:each="p,st:${list}">
+        <tr>
+            <th colspan="4"><h1>员工信息</h1></th>
+        </tr>
+        <tr >
+            <td>工号:</td><td th:text="${p.staff_number}"></td>
+            <td>姓名:</td><td th:text="${p.staff_name}"></td>
+        </tr>
+        <tr >
+            <td>性别:</td><td th:text="${p.sex}"></td>
+            <td>部门:</td><td th:text="${p.department_name}"></td>
+        </tr>
+        <tr >
+            <td>岗位:</td><td th:text="${p.duty_name}"></td>
+            <td></td><td ></td>
+        </tr>
+
+        <tr >
+            <th colspan="4"><h1>合同信息</h1></th>
+        </tr>
+
+        <tr >
+            <td>合同编号:</td><td th:text="${p.contract_id}"></td>
+            <td>合同名称:</td><td th:text="${p.contract_name}"></td>
+        </tr>
+        <tr >
+            <td>合同类型:</td><td th:text="${p.contract_type}"></td>
+            <td>有无期限:</td><td th:text="${p.contract_deadline_is}"></td>
+        </tr>
+
+
+
+        <tr>
+            <td>是否转正:</td><td th:text="${p.contract_official}"></td>
+            <td>签约时间:</td><td th:text="${p.contract_sign_date}"></td>
+        </tr>
+        <tr >
+            <td>合同状态:</td><td th:text="${p.contract_status}"></td>
+            <td>合同期限:</td><td th:text="${p.contract_deadline+'年'}"></td>
+        </tr>
+        <tr >
+            <td>基本工资:</td><td th:text="${p.contract_official_salary+'元'}"></td>
+            <td></td><td></td>
+        </tr>
+        <tr >
+            <td>生效时间:</td><td th:text="${p.contract_official_start}"></td>
+            <td>到期时间:</td><td th:text="${p.contract_official_end}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

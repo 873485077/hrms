@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" >
+    <title>Title</title>
+    <LINK th:href="@{'/css/bootstrap.min.css'}" type="text/css" rel="stylesheet">
+    <LINK th:href="@{'/css/my.css'}" type="text/css" rel="stylesheet">
+    <script th:href="@{'/js/bootstrap.min.js'}"></script>
+</head>
+</head>
+<body>
+<div class="container col-md-10 col-md-offset-1">
+    <table class="table table-bordered table-striped table-hover" th:each="v,st:${list}">
+        <tr>
+            <th colspan="4"><h1>员工信息</h1></th>
+        </tr>
+        <tr >
+            <td>工号:</td><td th:text="${v.staff_number}"></td>
+            <td>姓名:</td><td th:text="${v.staff_name}"></td>
+        </tr>
+        <tr >
+            <td>性别:</td><td th:text="${v.sex}"></td>
+            <td>身份证号:</td><td th:text="${v.staff_id_number}"></td>
+        </tr>
+        <tr >
+            <td>岗位:</td><td th:text="${v.duty_name}"></td>
+            <td>部门:</td><td th:text="${v.department_name}"></td>
+        </tr>
+
+        <tr >
+            <th colspan="4"><h1>离职信息</h1></th>
+        </tr>
+
+        <tr >
+            <td>离职时间:</td><td th:text="${v.demission_date}"></td>
+            <td>离职类型:</td><td th:text="${v.demission_type}"></td>
+        </tr>
+        <tr >
+            <td>离职去向:</td><td th:text="${v.demission_where}"></td>
+            <td>工资截止:</td><td th:text="${v.demission_salary_end}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
