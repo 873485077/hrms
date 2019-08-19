@@ -16,6 +16,7 @@ spring:
     encoding: UTF-8
     cache: false #关闭缓存
     mode: LEGACYHTML5
+    perfix: classpath:/templates #避免Error resolving template错误
   servlet:
     multipart:
       max-file-size: 1MB #限制上传单个文件大小
@@ -34,6 +35,5 @@ mybatis:
   type-aliases-package: org.java.entity #自动给实体类起别名
 
 
-  #sdsdsd
 
-  #54546465
+
