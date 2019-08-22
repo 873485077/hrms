@@ -40,7 +40,7 @@ public class StaffController {
             page = 1;
         }
         //每页显示5条数据
-        int rows = 1;
+        int rows = 5;
         //得到数据的总条数
         int count = service.staffGetCount();
         //最大页数
@@ -94,14 +94,14 @@ public class StaffController {
     public String contractDetail(Model model, @PathVariable("staff_number") int staff_number){
         List<Map> list = service.contractDetail(staff_number);
         model.addAttribute("list",list);
-        return "/contractDetail";
+        return "/contract_detail";
     }
 
     @RequestMapping("/demission_find")
     public String demissionFind(Model model){
         List<Map> list = service.demissionFind();
         model.addAttribute("list",list);
-        return "/demissionFind";
+        return "/demission_find";
     }
 
     @RequestMapping("/demission_detail/{staff_number}")
