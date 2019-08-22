@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <style type="text/css">
+        .layui-form-item .layui-inline { margin-bottom: 0px; }
+        .layui-form-item { margin-bottom: 5px; }
+        #layui-table-page1,layui-table-page2 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 招聘计划申请 主页面 -->
+<div class="layui-breadcrumb"  style="margin-top:8px">
+    <i class="layui-icon">&#xe65b;</i>
+    <a href="/forward/right">首页</a>
+    <a><cite>招聘计划申请</cite></a>
+</div>
+<hr class="layui-bg-gray" style="height:3px ;">
+<!--tab标签开始-->
+<div class="layui-tab layui-tab-brief">
+    <ul class="layui-tab-title ">
+        <li class="layui-this"> <i class="layui-icon">&#xe6b2;</i>送审中</li>
+        <li> <i class="layui-icon">&#xe605;</i>审批完成</li>
+        <div class="layui-layout-right" id="layer-btn">
+            <button data-method="offset" data-type="auto" class="layui-btn layui-btn-normal layui-btn-sm">
+                <i class="layui-icon">&#xe608;</i>增加
+            </button>
+            <button type="button" class="layui-btn layui-btn-sm layui-btn-danger">
+                <i class="layui-icon">&#xe640;</i>删除
+            </button>
+            <button type="button" class="layui-btn layui-btn-sm layui-btn-normal">
+                <i class="layui-icon">&#xe615;</i>查询
+            </button>
+            <span style="margin-right: 30px"></span>
+        </div>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+
+            <!--送审中的界面，设置脚本在页面末尾-->
+            <table id="approving" lay-filter="test"></table>
+
+
+        </div>
+        <!--送审中的界面，结束标签-->
+        <div class="layui-tab-item">
+
+            <!--审批完成的界面-->
+            <table id="approved" lay-filter="test"></table>
+
+
+        </div>
+        <!--审批完成的界面，结束标签-->
+
+    </div>
+</div>
+<!--tab标签结尾-->
+
+
+<script src="/layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script type="text/javascript" th:inline="none">
+    layui.use(['form', 'layedit', 'laydate','element','table','layer'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate
+            ,element = layui.element
+            ,$ = layui.jquery
+            ,table = layui.table;
+
+        // #### 送审中 的 数据表格 ####
+        table.render({
+            elem: '#approving' //控件的id
+            ,url: '/getStaffDemand' //数据接口
+            ,height: 'auto'
+            ,method: 'get'
+            ,page: true //开启分页
+            ,limit: 1 //默认每一页显示的条数
+            ,limits: [1, 2, 3, 5, 10, 20, 30, 50]//提示的每页条数的列表
+            ,toolbar: '#toolbarDemo' //显示工具栏
+            ,title: "征集表" //设置导出文件时的标题
+            ,loading: true
+            ,cols: [
+                [ //表头
+                    {field: 'no', type: 'checkbox', width: "3%", fixed: 'left', align: "center"}
+                    ,{field: 'demand_title', title: '招聘主题', width:"37%", align: "center", sort: true}
+                    ,{field: 'department_name', title: '招聘部门', width:"20%", align: "center"}
+                    ,{field: 'demand_status', title: '状态', width:"10%", align: "center", sort: true}
+                    ,{field: 'processInstance_id', title: '步骤与流程图', width:"15%", align: "center"}
+                    ,{field: 'op', title: '操作', width: "15%", align: "center",templet: '#barDemo'}
+                ]
+            ]
+        });
+
+        // #### 审批完成 的 数据表格 ####
+        table.render({
+            elem: '#approved' //控件的id
+            ,url: '/getStaffDemand' //数据接口
+            ,height: 'auto'
+            ,method: 'get'
+            ,page: true //开启分页
+            ,limit: 1 //默认每一页显示的条数
+            ,limits: [1, 2, 3, 5, 10, 20, 30, 50]//提示的每页条数的列表
+            ,toolbar: '#toolbarDemo' //显示工具栏
+            ,title: "审批完成" //设置导出文件时的标题
+            ,loading: true
+            ,cols: [
+                [ //表头
+                    {field: 'no', type: 'checkbox', width: "3%", fixed: 'left', align: "center"}
+                    ,{field: 'demand_title', title: '招聘主题', width:"37%", align: "center", sort: true}
+                    ,{field: 'department_name', title: '招聘部门', width:"20%", align: "center"}
+                    ,{field: 'demand_status', title: '状态', width:"10%", align: "center", sort: true}
+                    ,{field: 'processInstance_id', title: '步骤与流程图', width:"15%", align: "center"}
+                    ,{field: 'op', title: '操作', width: "15%", align: "center",templet: '#barDemo'}
+                ]
+            ]
+        });
+
+        //添加按钮 触发事件
+        var active = {
+            offset: function(othis){
+                var type = othis.data('type')
+                    ,text = othis.text();
+
+                layer.open({
+                    type: 2 //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                    ,title:'添加招聘计划'
+                    ,offset: '30px' //窗口顶边距
+                    ,area: ['900px', '500px'] //窗口大小
+                    ,id: 'layerBtn'+type //防止重复弹出
+                    ,content: '/forward/recruitment/addStaffDemand' //弹出窗引用的内容
+                    ,btnAlign: 'c' //按钮居中
+                    ,shade: 1 //不显示遮罩
+                    ,shadeClose: true //点击外层关闭遮罩
+                    ,yes: function(){
+                        layer.closeAll();
+                    }
+                });
+            }
+        };
+
+        $('#layer-btn .layui-btn').on('click', function(){
+            var othis = $(this), method = othis.data('method');
+            active[method] ? active[method].call(this, othis) : '';
+        });
+
+    });
+</script>
+<!--工具栏模板：-->
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" lay-event="add">
+           <i class="layui-icon">这里是表格的标题栏，文件位置staffDemand.html</i>
+        </button>
+    </div>
+</script>
+<!-- 数据表格的操作一栏，引用：-->
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="detail">流程结构</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">跟踪</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">打印</a>
+    <!-- 这里同样支持 laytpl 语法，如： -->
+    {{#  if(d.auth > 2){ }}
+    <a class="layui-btn layui-btn-xs" lay-event="check">审核</a>
+    {{#  } }}
+</script>
+</body>
+</html>
