@@ -42,11 +42,11 @@ public class StaffController {
         //每页显示5条数据
         int rows = 1;
         //得到数据的总条数
-        int count = service.staff_getCount();
+        int count = service.staffGetCount();
         //最大页数
         int maxPage = count % rows == 0 ? count / rows : count / rows + 1;
 
-        List<Map> list = service.staff_find(page, rows);
+        List<Map> list = service.staffFind(page, rows);
         model.addAttribute("list", list);
         //把分页需要的四个参数存放到model中
         model.addAttribute("page", page);
@@ -57,42 +57,56 @@ public class StaffController {
     }
 
     @RequestMapping("/staff_detail/{staff_number}")
-    public String staff_detail(Model model, @PathVariable("staff_number") int staff_number){
-        List<Map> list = service.staff_detail(staff_number);
+    public String staffDetail(Model model, @PathVariable("staff_number") int staff_number){
+        List<Map> list = service.staffDetail(staff_number);
         model.addAttribute("list",list);
         return "/staff_detail";
     }
 
     @RequestMapping("/staff_add")
-    public String staff_add(@RequestParam Map map){
-        service.staff_add(map);
+    public String staffAdd(@RequestParam Map map){
+        service.staffAdd(map);
         return "redirect:/init";
     }
 
+    @RequestMapping("/update_staff/{staff_number}")
+    public String updateStaff(Model model, @PathVariable("staff_number") int staff_number){
+        Map m = service.updateStaff(staff_number);
+        model.addAttribute("m",m);
+        return "/staff_update";
+    }
+
+    @RequestMapping("/staff_update")
+    public String staffUpdate(@RequestParam Map map){
+        service.staffUpdate(map);
+        return "redirect:/init";
+    }
+
+
     @RequestMapping("/contract_find")
-    public String contract_find(Model model){
-        List<Map> list = service.contract_find();
+    public String contractFind(Model model){
+        List<Map> list = service.contractFind();
         model.addAttribute("list",list);
         return "/contract_find";
     }
 
     @RequestMapping("/contract_detail/{staff_number}")
-    public String contract_detail(Model model, @PathVariable("staff_number") int staff_number){
-        List<Map> list = service.contract_detail(staff_number);
+    public String contractDetail(Model model, @PathVariable("staff_number") int staff_number){
+        List<Map> list = service.contractDetail(staff_number);
         model.addAttribute("list",list);
-        return "/contract_detail";
+        return "/contractDetail";
     }
 
     @RequestMapping("/demission_find")
-    public String demission_find(Model model){
-        List<Map> list = service.demission_find();
+    public String demissionFind(Model model){
+        List<Map> list = service.demissionFind();
         model.addAttribute("list",list);
-        return "/demission_find";
+        return "/demissionFind";
     }
 
     @RequestMapping("/demission_detail/{staff_number}")
-    public String demission_detail(Model model, @PathVariable("staff_number") int staff_number){
-        List<Map> list = service.demission_detail(staff_number);
+    public String demissionDetail(Model model, @PathVariable("staff_number") int staff_number){
+        List<Map> list = service.demissionDetail(staff_number);
         model.addAttribute("list",list);
         return "/demission_detail";
     }

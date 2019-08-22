@@ -21,6 +21,7 @@
             <td th:text="${k.duty_name}"></td>
             <td>
                 <a th:href="@{|/staff_detail/${k.staff_number}|}" class="btn btn-sm btn-success">查看</a>
+                <a th:href="@{|/update_staff/${k.staff_number}|}" class="btn btn-sm bg-primary">修改</a>
                 <a th:href="@{'/forward/staff_add'}" class="btn btn-sm btn-warning">添加</a>
             </td>
         </tr>
