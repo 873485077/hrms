@@ -27,9 +27,13 @@ public interface StaffMapper {
 
     public List<Map> contractFind(@Param("start") int start, @Param("rows") int rows);
 
+    public int contractGetCount();
+
     public List<Map> contractDetail(int Staff_number);
 
     public List<Map> demissionFind(@Param("start") int start, @Param("rows") int rows);
+
+    public int demissionGetCount();
 
     public List<Map> demissionDetail(int Staff_number);
 

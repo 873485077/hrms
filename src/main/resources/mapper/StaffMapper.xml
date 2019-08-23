@@ -52,6 +52,12 @@
         limit #{start},#{rows}
     </select>
 
+    <!--查询员工表数据总数-->
+    <select id="contractGetCount" resultType="int">
+        select count(*) from hr_contract_info
+    </select>
+
+
     <!--查看合同详细信息-->
     <select id="contractDetail" resultType="map" parameterType="int">
     SELECT staff_number,staff_name,sex,department_name,duty_name,
@@ -74,6 +80,12 @@
     AND c.department_id = d.department_id
     limit #{start},#{rows}
     </select>
+
+    <!--查询员工表数据总数-->
+    <select id="demissionGetCount" resultType="int">
+        select count(*) from hr_demission_info
+    </select>
+
 
     <!--查看离职员工详细信息-->
     <select id="demissionDetail" resultType="map" parameterType="int">

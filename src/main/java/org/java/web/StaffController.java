@@ -92,7 +92,7 @@ public class StaffController {
         //每页显示5条数据
         int rows = 5;
         //得到数据的总条数
-        int count = service.staffGetCount();
+        int count = service.contractGetCount();
         //最大页数
         int maxPage = count % rows == 0 ? count / rows : count / rows + 1;
 
@@ -124,7 +124,7 @@ public class StaffController {
         //每页显示5条数据
         int rows = 5;
         //得到数据的总条数
-        int count = service.staffGetCount();
+        int count = service.demissionGetCount();
         //最大页数
         int maxPage = count % rows == 0 ? count / rows : count / rows + 1;
 

@@ -23,9 +23,13 @@ public interface StaffService {
 
     public List<Map> contractFind(int page, int rows);
 
+    public int contractGetCount();
+
     public List<Map> contractDetail(int Staff_number);
 
     public List<Map> demissionFind(int page, int rows);
+
+    public int demissionGetCount();
 
     public List<Map> demissionDetail(int Staff_number);
 

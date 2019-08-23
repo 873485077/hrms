@@ -60,6 +60,11 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
+    public int contractGetCount() {
+        return mapper.contractGetCount();
+    }
+
+    @Override
     public List<Map> contractDetail(int staff_number) {
         return mapper.contractDetail(staff_number);
     }
@@ -68,6 +73,11 @@ public class StaffServiceImpl implements StaffService {
     public List<Map> demissionFind(int page, int rows) {
         int start = (page-1)*rows;
         return mapper.demissionFind(start,rows);
+    }
+
+    @Override
+    public int demissionGetCount() {
+        return mapper.demissionGetCount();
     }
 
     @Override
