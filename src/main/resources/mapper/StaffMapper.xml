@@ -52,7 +52,7 @@
         limit #{start},#{rows}
     </select>
 
-    <!--查询员工表数据总数-->
+    <!--查询合同表数据总数-->
     <select id="contractGetCount" resultType="int">
         select count(*) from hr_contract_info
     </select>
@@ -81,7 +81,7 @@
     limit #{start},#{rows}
     </select>
 
-    <!--查询员工表数据总数-->
+    <!--查询离职员工表数据总数-->
     <select id="demissionGetCount" resultType="int">
         select count(*) from hr_demission_info
     </select>
