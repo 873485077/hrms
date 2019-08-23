@@ -8,7 +8,7 @@
     <script th:href="@{'/js/bootstrap.min.js'}"></script>
 </head>
 <body>
-<div class="container col-md-10 col-md-offset-1">
+<div class="container col-md-12 col-md-offset-0">
     <table class="table table-bordered table-striped table-hover">
         <tr>
             <th>编号</th><th>工号</th><th>姓名</th><th>部门</th><th>职务</th><th>操作</th>
@@ -32,21 +32,21 @@
                     上一页
                 </b>
                 <b th:if="${page gt 1}">
-                    <a th:href="@{'/init/1'}">首页</a>
-                    <a th:href="@{|/init/${page-1}|}">上一页</a>
+                    <a th:href="@{'/staff_find/1'}">首页</a>
+                    <a th:href="@{|/staff_find/${page-1}|}">上一页</a>
                 </b>
                 <b th:if="${page eq maxPage}">
                     下一页
                     尾页
                 </b>
                 <b th:if="${page lt maxPage}">
-                    <a th:href="@{|/init/${page+1}|}">下一页</a>
-                    <a th:href="@{|/init/${maxPage}|}">尾页</a>
+                    <a th:href="@{|/staff_find/${page+1}|}">下一页</a>
+                    <a th:href="@{|/staff_find/${maxPage}|}">尾页</a>
                 </b>
                 共<b class="mb">[[${count}]]</b>条
                 每页<b class="mb">[[${rows}]]</b>条
                 共<b class="mb">[[${maxPage}]]</b>页
-                <select name="page" th:onchange="location.href='/init/'+this.value">
+                <select name="page" th:onchange="location.href='/staff_find/'+this.value">
                     <div th:each="m:${#numbers.sequence(1,maxPage)}">
                         <option th:value="${m}" th:attr="selected=${m==page?true:false}">第[[${m}]]页</option>
                     </div>

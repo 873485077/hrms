@@ -49,6 +49,7 @@
         WHERE d.staff_id = b.staff_id
         AND c.department_id = d.department_id
         AND a.contract_id = d.contract_id
+        limit #{start},#{rows}
     </select>
 
     <!--查看合同详细信息-->
@@ -71,6 +72,7 @@
     WHERE a.staff_id = b.staff_id
     AND b.staff_id = d.staff_id
     AND c.department_id = d.department_id
+    limit #{start},#{rows}
     </select>
 
     <!--查看离职员工详细信息-->

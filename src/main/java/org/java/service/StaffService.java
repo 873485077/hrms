@@ -21,11 +21,11 @@ public interface StaffService {
 
     public void staffUpdate(Map map);
 
-    public List<Map> contractFind();
+    public List<Map> contractFind(int page, int rows);
 
     public List<Map> contractDetail(int Staff_number);
 
-    public List<Map> demissionFind();
+    public List<Map> demissionFind(int page, int rows);
 
     public List<Map> demissionDetail(int Staff_number);
 

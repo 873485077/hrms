@@ -54,8 +54,9 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public List<Map> contractFind() {
-        return mapper.contractFind();
+    public List<Map> contractFind(int page, int rows) {
+        int start = (page-1)*rows;
+        return mapper.contractFind(start,rows);
     }
 
     @Override
@@ -64,8 +65,9 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public List<Map> demissionFind() {
-        return mapper.demissionFind();
+    public List<Map> demissionFind(int page, int rows) {
+        int start = (page-1)*rows;
+        return mapper.demissionFind(start,rows);
     }
 
     @Override

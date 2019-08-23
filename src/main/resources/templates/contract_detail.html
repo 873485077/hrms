@@ -9,7 +9,7 @@
 </head>
 </head>
 <body>
-<div class="container col-md-10 col-md-offset-1">
+<div class="container col-md-12 col-md-offset-0">
     <table class="table table-bordered table-striped table-hover" th:each="p,st:${list}">
         <tr>
             <th colspan="4"><h1>员工信息</h1></th>
@@ -39,9 +39,6 @@
             <td>合同类型:</td><td th:text="${p.contract_type}"></td>
             <td>有无期限:</td><td th:text="${p.contract_deadline_is}"></td>
         </tr>
-
-
-
         <tr>
             <td>是否转正:</td><td th:text="${p.contract_official}"></td>
             <td>签约时间:</td><td th:text="${p.contract_sign_date}"></td>
@@ -57,6 +54,12 @@
         <tr >
             <td>生效时间:</td><td th:text="${p.contract_official_start}"></td>
             <td>到期时间:</td><td th:text="${p.contract_official_end}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="button" value="返回" onclick="history.back()" class="btn btn-sm btn-success">
+            </td>
         </tr>
     </table>
 </div>

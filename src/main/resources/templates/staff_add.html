@@ -9,108 +9,110 @@
 </head>
 <body>
 <form th:action="@{'/staff_add'}" method="post">
-    <div class="container col-md-10 col-md-offset-1">
+    <div class="container col-md-12 col-md-offset-0">
         <table class="table table-bordered table-striped table-hover">
 
             <tr>
-                <th colspan="4"><h1>添加信息</h1></th>
+                <th colspan="4">添加信息</th>
             </tr>
             <tr >
                 <td>工号:</td>
                 <td>
-                    <input type="text" name="staff_number">
+                    <input type="text" name="staff_number" required="required">
                 </td>
                 <td>姓名:</td>
                 <td>
-                    <input type="text" name="staff_name">
+                    <input type="text" name="staff_name" required="required">
                 </td>
             </tr>
             <tr >
                 <td>性别:</td>
                 <td>
-                    <input type="text" name="sex">
+                    <input type="radio" value="男" name="sex" checked="checked">男
+                    <input type="radio" value="女" name="sex">女
                 </td>
                 <td>出生日期:</td>
                 <td>
-                    <input type="text" name="staff_birthday">
+                    <input type="date" class="form-control" name="staff_birthday">
                 </td>
             </tr>
             <tr >
                 <td>籍贯:</td>
                 <td>
-                    <input type="text" name="staff_birthplace">
+                    <input type="text" name="staff_birthplace" required="required">
                 </td>
                 <td>民族:</td>
                 <td>
-                    <input type="text" name="staff_nation">
+                    <input type="text" name="staff_nation" required="required">
                 </td>
             </tr>
             <tr >
                 <td>婚姻状况:</td>
                 <td>
-                    <input type="text" name="staff_marriage">
+                    <input type="radio" value="1" name="staff_marriage">已婚
+                    <input type="radio" value="0" name="staff_marriage" checked="checked">未婚
                 </td>
                 <td>政治面貌:</td>
                 <td>
-                    <input type="text" name="staff_politics">
+                    <input type="text" name="staff_politics" required="required">
                 </td>
             </tr>
             <tr >
                 <td>身份证号:</td>
                 <td>
-                    <input type="text" name="staff_id_number">
+                    <input type="text" name="staff_id_number" required="required">
                 </td>
                 <td>在岗状态:</td>
                 <td>
-                    <input type="text" name="staff_job_status">
+                    <input type="text" name="staff_job_status" required="required">
                 </td>
             </tr>
 
             <tr>
                 <td>参加工作时间:</td>
                 <td>
-                    <input type="text" name="staff_work_date">
+                    <input type="date" class="form-control" name="staff_work_date">
                 </td>
                 <td></td><td></td>
             </tr>
             <tr >
                 <td>学历:</td>
                 <td>
-                    <input type="text" name="staff_school_record">
+                    <input type="text" name="staff_school_record" required="required">
                 </td>
                 <td>毕业学校:</td>
                 <td>
-                    <input type="text" name="staff_college">
+                    <input type="text" name="staff_college" required="required">
                 </td>
             </tr>
             <tr >
                 <td>专业:</td>
                 <td>
-                    <input type="text" name="staff_major">
+                    <input type="text" name="staff_major" required="required">
                 </td>
                 <td>毕业时间:</td>
                 <td>
-                    <input type="text" name="staff_graduation_date">
+                    <input type="date" class="form-control" name="staff_graduation_date" required="required">
                 </td>
             </tr>
             <tr >
                 <td>邮箱:</td>
                 <td>
-                    <input type="text" name="staff_email">
+                    <input type="text" name="staff_email" required="required">
                 </td>
                 <td>电话:</td>
                 <td>
-                    <input type="text" name="staff_telphone">
+                    <input type="text" name="staff_telphone" required="required">
                 </td>
             </tr>
             <tr >
                 <td>住址:</td>
                 <td>
-                    <input type="text" name="staff_address">
+                    <input type="text" name="staff_address" required="required">
                 </td>
                 <td>进入部门时间:</td>
                 <td>
-                    <input type="text" name="staff_indepartment_date">
+                    <input type="date" class="form-control" name="staff_indepartment_date" required="required">
                 </td>
             </tr>
             <tr >
@@ -126,17 +128,17 @@
             <tr >
                 <td>职务:</td>
                 <td>
-                    <input type="text" name="duty_id">
+                    <input type="text" name="duty_id" required="required">
                 </td>
                 <td>原职务:</td>
                 <td>
-                    <input type="text" name="original_duty_id">
+                    <input type="text" name="original_duty_id" required="required">
                 </td>
             </tr>
             <tr >
                 <td>起薪日:</td>
                 <td>
-                    <input type="text" name="staff_salary_day">
+                    <input type="date" class="form-control" name="staff_salary_day">
                 </td>
                 <td>
                     <input  type="submit" value="提交" class="btn btn-sm btn-warning">
