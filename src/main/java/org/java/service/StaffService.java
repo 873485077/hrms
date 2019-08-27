@@ -21,6 +21,8 @@ public interface StaffService {
 
     public void staffUpdate(Map map);
 
+    public void staffDelete(int staff_number);
+
     public List<Map> contractFind(int page, int rows);
 
     public int contractGetCount();

@@ -66,7 +66,7 @@ public class StaffController {
     @RequestMapping("/staff_add")
     public String staffAdd(@RequestParam Map map){
         service.staffAdd(map);
-        return "redirect:/init";
+        return "redirect:/staff_find";
     }
 
     @RequestMapping("/update_staff/{staff_number}")
@@ -79,9 +79,15 @@ public class StaffController {
     @RequestMapping("/staff_update")
     public String staffUpdate(@RequestParam Map map){
         service.staffUpdate(map);
-        return "redirect:/init";
+        return "redirect:/staff_find";
     }
 
+
+    @RequestMapping("/staff_delete/{staff_number}")
+    public String staffDelete(@PathVariable("staff_number") int staff_number){
+        service.staffDelete(staff_number);
+        return "redirect:/staff_find";
+    }
 
     @RequestMapping(value = {"/contract_find","contract_find/{page}"})
     public String contractFind(Model model, @PathVariable(value = "page", required = false) Integer page){

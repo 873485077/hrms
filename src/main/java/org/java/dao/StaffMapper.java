@@ -25,6 +25,8 @@ public interface StaffMapper {
 
     public void staffUpdate(Map map);
 
+    public void staffDelete(int staff_number);
+
     public List<Map> contractFind(@Param("start") int start, @Param("rows") int rows);
 
     public int contractGetCount();
