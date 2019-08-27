@@ -1,5 +1,6 @@
 package org.java.service;
 
+import org.apache.ibatis.annotations.Param;
 import org.java.entity.StaffDemand;
 
 import java.util.List;
@@ -25,4 +26,12 @@ public interface DepartmentService {
      * 获得人员需求征集表的数据数量（行数）
      * @return
      */
-    int getStaffDemandCount();}
+    int getStaffDemandCount();
+
+    /**
+     * 征集表审核完成
+     */
+    List<StaffDemand> getStaffDemandApproved(@Param("start") int start, @Param("rows") int rows);
+    int getStaffDemandApprovedCount();
+
+}

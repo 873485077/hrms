@@ -11,10 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
  */
 @Controller
 public class PageController {
-    @GetMapping("/index")
-    public String index(){
-        return "/index";
-    }
 
     @GetMapping("/forward/{page}")
     public String forward(@PathVariable("page") String page){

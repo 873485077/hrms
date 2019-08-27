@@ -58,4 +58,14 @@ public class StaffDemand implements Serializable {
                 ", processInstance_id=" + processInstance_id +
                 '}';
     }
+
+    public StaffDemand() {
+    }
+
+    public StaffDemand(String demand_status, String demand_title, String department_name, Integer processInstance_id) {
+        this.demand_status = demand_status;
+        this.demand_title = demand_title;
+        this.department_name = department_name;
+        this.processInstance_id = processInstance_id;
+    }
 }
