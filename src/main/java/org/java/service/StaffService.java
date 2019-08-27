@@ -9,20 +9,24 @@ import java.util.Map;
  */
 public interface StaffService {
 
-    public List<Map> staff_find(int page, int rows);
+    public List<Map> staffFind(int page, int rows);
 
-    public int staff_getCount();
+    public int staffGetCount();
 
-    public List<Map> staff_detail(int Staff_number);
+    public List<Map> staffDetail(int Staff_number);
 
-    public void staff_add(Map map);
+    public void staffAdd(Map map);
 
-    public List<Map> contract_find();
+    public Map updateStaff(int staff_number);
 
-    public List<Map> contract_detail(int Staff_number);
+    public void staffUpdate(Map map);
 
-    public List<Map> demission_find();
+    public List<Map> contractFind();
 
-    public List<Map> demission_detail(int Staff_number);
+    public List<Map> contractDetail(int Staff_number);
+
+    public List<Map> demissionFind();
+
+    public List<Map> demissionDetail(int Staff_number);
 
 }

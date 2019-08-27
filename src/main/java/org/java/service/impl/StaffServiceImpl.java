@@ -4,6 +4,7 @@ import org.java.dao.StaffMapper;
 import org.java.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -19,45 +20,56 @@ public class StaffServiceImpl implements StaffService {
     private StaffMapper mapper;
 
     @Override
-    public List<Map> staff_find(int page, int rows) {
+    public List<Map> staffFind(int page, int rows) {
         //根据当前页,计算开始下标
         int start = (page-1)*rows;
-        List<Map> list = mapper.staff_find(start,rows);
+        List<Map> list = mapper.staffFind(start,rows);
         return list;
     }
 
     @Override
-    public int staff_getCount() {
-        return mapper.staff_getCount();
+    public int staffGetCount() {
+        return mapper.staffGetCount();
     }
 
     @Override
-    public List<Map> staff_detail(int staff_number) {
-        return mapper.staff_detail(staff_number);
+    public List<Map> staffDetail(int staff_number) {
+        return mapper.staffDetail(staff_number);
     }
 
     @Override
-    public void staff_add(Map map) {
-        mapper.staff_add(map);
+    public void staffAdd(Map map) {
+        mapper.staffAdd(map);
     }
 
     @Override
-    public List<Map> contract_find() {
-        return mapper.contract_find();
+    public Map updateStaff(int staff_number) {
+        return mapper.updateStaff(staff_number);
+    }
+
+    @Transactional
+    @Override
+    public void staffUpdate(Map map) {
+        mapper.staffUpdate(map);
     }
 
     @Override
-    public List<Map> contract_detail(int staff_number) {
-        return mapper.contract_detail(staff_number);
+    public List<Map> contractFind() {
+        return mapper.contractFind();
     }
 
     @Override
-    public List<Map> demission_find() {
-        return mapper.demission_find();
+    public List<Map> contractDetail(int staff_number) {
+        return mapper.contractDetail(staff_number);
     }
 
     @Override
-    public List<Map> demission_detail(int staff_number) {
-        return mapper.demission_detail(staff_number);
+    public List<Map> demissionFind() {
+        return mapper.demissionFind();
+    }
+
+    @Override
+    public List<Map> demissionDetail(int staff_number) {
+        return mapper.demissionDetail(staff_number);
     }
 }
