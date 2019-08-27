@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>流程管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{'/layui/css/layui.css'}" media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <style type="text/css">
+        .layui-center {text-align: center;}
+        .showResource {color: #00d20d; }
+    </style>
+</head>
+<body style="margin:0; height: 100%;">
+<div class="layui-tab layui-tab-brief" >
+    <!--//layer数据表格容器-->
+    <div class="layui-tab-content" id="layerTab">
+        <div class="layui-tab-item layui-show" >
+            <table id="approving" lay-filter="test"></table>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{'/layui/layui.js'}" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script type="text/javascript" th:inline="none">
+    layui.use(['form', 'layedit', 'laydate','element','table','layer'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate
+            ,element = layui.element
+            ,$ = layui.jquery
+            ,table = layui.table;
+
+        // #### 显示流程定义 的 数据表格 ####
+        table.render({
+            elem: '#approving' //控件的id
+            ,url: '/showProcess1' //数据接口
+            ,method: 'get'
+            ,page: true //开启分页
+            ,limit: 5 //默认每一页显示的条数
+            ,limits: [1, 2, 3, 5, 10, 20, 30, 50]//提示的每页条数的列表
+            ,toolbar: '#toolbarDemo' //显示工具栏
+            ,title: "征集表" //设置导出文件时的标题
+            ,loading: true
+            ,cols: [
+                [ //表头
+                    {field: 'no', type: 'checkbox', width: "3%", fixed: 'left', align: "center"}
+                    ,{field: 'number', width: '5%', title: '序号', fixed: 'left', align: "center", type: "numbers"}
+                    ,{field: 'id', width: '20%', title: '流程定义id', fixed: 'left', align: "center"}
+                    ,{field: 'deploymentId', title: '流程部署id', width:"10%", align: "center", sort: true}
+                    ,{field: 'version', title: '版本', width:"5%", align: "center"}
+                    ,{field: 'key', title: 'key', width:"10%", align: "center"}
+                    ,{field: 'diagramResourceName', title: 'png', width:"15%", align: "center",templet:'#pngResource'}
+                    ,{field: 'resourceName', title: 'bpmn', width: "15%", align: "center",templet:'#bpmnResource'}
+                    ,{field: 'op', title: '操作', width: "17%", align: "center",templet: '#barDemo'}
+
+                ]
+            ]
+        });
+
+        /*vvvvvvvvvvvvv监听行工具栏事件vvvvvvvvvvvvvvvvv*/
+        //监听工具条
+        table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+            //这里判断的值是与数据表格行工具对应(页面最下方脚本)
+            if (layEvent === 'del') { //删除
+                parent.layer.confirm('真的要删除这个流程定义吗?', function (index) {
+                    //向服务端发送删除指令
+                    $.ajax({
+                        type:"get"
+                        ,url: "/act/del/"+data.deploymentId
+                        ,success:function (res) {
+                            if(res != null){
+                                //obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                                //layer.close(index);
+                                parent.layer.msg("删除成功");
+                                location.reload();
+                            }
+                        }
+                    })
+                });
+            }else if (layEvent === 'showRes') {  //查看png
+                //触发事件
+                var active = {
+                    offsetBpmn: function(othis){
+                        var type = othis.data('type')
+                            ,text = othis.text();
+                        parent.layer.open({
+                            type: 2
+                            ,content: '/showResource/'+data.deploymentId+'/'+data.resourceName
+                            ,offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                            ,id: 'layerDemo'+type //防止重复弹出
+                            ,title: data.resourceName+'预览'
+                            //,btn: '关闭全部'
+                            ,btnAlign: 'c' //按钮居中
+                            ,area: ['800px','500px']
+                            ,skin: "layui-center"
+                            ,shade: 0.5 //不显示遮罩
+                            ,shadeClose: true
+                            ,success: function(res){
+
+                            }
+
+                        });
+                    }
+                    ,offsetPng: function(othis){
+                        var type = othis.data('type')
+                            ,text = othis.text();
+                        parent.layer.open({
+                            type: 2
+                            ,content: '/showResource/'+data.deploymentId+'/'+data.diagramResourceName
+                            ,offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                            ,id: 'layerDemo'+type //防止重复弹出
+                            ,title: data.diagramResourceName+'预览'
+                            //,btn: '关闭全部'
+                            ,btnAlign: 'c' //按钮居中
+                            ,area: ['800px','500px']
+                            ,skin: "layui-center"
+                            ,shade: 0.5 //不显示遮罩
+                            ,shadeClose: true
+                            ,success: function(res){
+
+                            }
+
+                        });
+                    }
+                };
+
+            }
+            $('#layerTab .showResource').on('click', function(){
+                var othis = $(this), method = othis.data('method');
+                active[method] ? active[method].call(this, othis) : '';
+            });
+
+
+        });
+
+    });
+</script>
+<!--标题栏左侧工具栏模板：-->
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <a class="layui-icon">显示所有流程定义，文件位置showProcessDefinition.html</a>
+    </div>
+</script>
+<!-- 数据表格行工具->>>操作一栏，引用：-->
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" data-method="confirmTrans" >删除定义</a>
+    <!-- 这里同样支持 laytpl 语法，如： -->
+    {{#  if(d.auth > 2){ }}
+    <a class="layui-btn layui-btn-xs" lay-event="check">审核</a>
+    {{#  } }}
+</script>
+<!-- 数据表格行工具->>>png一栏，引用：-->
+<script type="text/html" id="pngResource">
+    <a lay-event="showRes" data-method="offsetPng" class="showResource">{{d.diagramResourceName}}</a>
+</script>
+<!-- 数据表格行工具->>>bpmn一栏，引用：-->
+<script type="text/html" id="bpmnResource">
+    <a lay-event="showRes" data-method="offsetBpmn" class="showResource">{{d.resourceName}}</a>
+</script>
+</body>
+</html>
