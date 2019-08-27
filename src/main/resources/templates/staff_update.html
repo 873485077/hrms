@@ -7,7 +7,7 @@
     <script th:href="@{'/js/bootstrap.min.js'}"></script>
 </head>
 <form th:action="@{'/staff_update'}" method="post">
-    <div class="container col-md-10 col-md-offset-1">
+    <div class="container col-md-12 col-md-offset-0">
         <table class="table table-bordered table-striped table-hover">
             <tr>
                 <th colspan="4"><h1>基本信息</h1></th>
@@ -34,7 +34,8 @@
             <tr >
                 <td>婚姻状况:</td>
                 <td>
-                    <input type="text"  name="staff_marriage"  th:value="${m.staff_marriage}">
+                    <input type="radio"   value="1" name="staff_marriage"  th:attr="checked=${m.staff_marriage=='1'?true:false}">已婚
+                    <input type="radio"  value="0" name="staff_marriage"  th:attr="checked=${m.staff_marriage=='0'?true:false}">未婚
                 </td>
                 <td>政治面貌:</td>
                 <td th:text="${m.staff_politics}"></td>

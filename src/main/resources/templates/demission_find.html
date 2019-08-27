@@ -8,7 +8,7 @@
     <script th:href="@{'/js/bootstrap.min.js'}"></script>
 </head>
 <body>
-<div class="container col-md-10 col-md-offset-1">
+<div class="container col-md-12 col-md-offset-0">
     <table class="table table-bordered table-striped table-hover">
         <tr>
             <th>员工工号</th><th>员工姓名</th><th>部门</th><th>离职类型</th><th>离职时间</th><th>操作</th>
@@ -21,6 +21,34 @@
             <td th:text="${n.demission_date}"></td>
             <td>
                 <a th:href="@{|/demission_detail/${n.staff_number}|}" class="btn btn-sm btn-success">查看</a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6">
+                <b th:if="${page eq 1}">
+                    首页
+                    上一页
+                </b>
+                <b th:if="${page gt 1}">
+                    <a th:href="@{'/demission_find/1'}">首页</a>
+                    <a th:href="@{|/demission_find/${page-1}|}">上一页</a>
+                </b>
+                <b th:if="${page eq maxPage}">
+                    下一页
+                    尾页
+                </b>
+                <b th:if="${page lt maxPage}">
+                    <a th:href="@{|/demission_find/${page+1}|}">下一页</a>
+                    <a th:href="@{|/demission_find/${maxPage}|}">尾页</a>
+                </b>
+                共<b class="mb">[[${count}]]</b>条
+                每页<b class="mb">[[${rows}]]</b>条
+                共<b class="mb">[[${maxPage}]]</b>页
+                <select name="page" th:onchange="location.href='/demission_find/'+this.value">
+                    <div th:each="m:${#numbers.sequence(1,maxPage)}">
+                        <option th:value="${m}" th:attr="selected=${m==page?true:false}">第[[${m}]]页</option>
+                    </div>
+                </select>
             </td>
         </tr>
     </table>

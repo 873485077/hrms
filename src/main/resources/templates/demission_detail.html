@@ -9,7 +9,7 @@
 </head>
 </head>
 <body>
-<div class="container col-md-10 col-md-offset-1">
+<div class="container col-md-12 col-md-offset-0">
     <table class="table table-bordered table-striped table-hover" th:each="v,st:${list}">
         <tr>
             <th colspan="4"><h1>员工信息</h1></th>
@@ -38,6 +38,12 @@
         <tr >
             <td>离职去向:</td><td th:text="${v.demission_where}"></td>
             <td>工资截止:</td><td th:text="${v.demission_salary_end}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="button" value="返回" onclick="history.back()" class="btn btn-sm btn-success">
+            </td>
         </tr>
     </table>
 </div>

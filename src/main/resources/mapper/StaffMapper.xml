@@ -49,7 +49,14 @@
         WHERE d.staff_id = b.staff_id
         AND c.department_id = d.department_id
         AND a.contract_id = d.contract_id
+        limit #{start},#{rows}
     </select>
+
+    <!--查询合同表数据总数-->
+    <select id="contractGetCount" resultType="int">
+        select count(*) from hr_contract_info
+    </select>
+
 
     <!--查看合同详细信息-->
     <select id="contractDetail" resultType="map" parameterType="int">
@@ -71,7 +78,14 @@
     WHERE a.staff_id = b.staff_id
     AND b.staff_id = d.staff_id
     AND c.department_id = d.department_id
+    limit #{start},#{rows}
     </select>
+
+    <!--查询离职员工表数据总数-->
+    <select id="demissionGetCount" resultType="int">
+        select count(*) from hr_demission_info
+    </select>
+
 
     <!--查看离职员工详细信息-->
     <select id="demissionDetail" resultType="map" parameterType="int">
