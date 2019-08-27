@@ -26,7 +26,7 @@ public class StaffController {
         return "/" + target;
     }
 
-    @RequestMapping(value = {"/init", "init/{page}"})
+    @RequestMapping(value = {"/staff_find", "staff_find/{page}"})
     public String init(Model model, @PathVariable(value = "page", required = false) Integer page) {
         //分页需要知道四个值: 当前页，每一页显示的条数据，总条数，最多可分成多少页
         /**
