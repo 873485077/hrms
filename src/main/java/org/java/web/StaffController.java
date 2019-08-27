@@ -112,7 +112,7 @@ public class StaffController {
     public String contractDetail(Model model, @PathVariable("staff_number") int staff_number){
         List<Map> list = service.contractDetail(staff_number);
         model.addAttribute("list",list);
-        return "/contractDetail";
+        return "/contract_detail";
     }
 
     @RequestMapping(value = {"/demission_find","demission_find/{page}"})
