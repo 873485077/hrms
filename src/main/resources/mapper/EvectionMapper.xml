@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.java.dao.EvectionMapper">
+
+    <select id="getList" resultType="Evection">
+        select evection_id as evectionId,staff_id as staffId,evection_date as evectionDate,
+        evection_type as evectionType,evection_start as evectionStart,evection_end as evectionEnd,
+        evection_remark as evectionRemark from hr_evection_info limit #{start},#{rows}
+    </select>
+
+   <select id="getCount" resultType="int">
+       select count(*) from hr_evection_info
+   </select>
+</mapper>      

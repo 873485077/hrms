@@ -96,15 +96,16 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">考勤管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a th:href="@{'/forward/right'}" target="right">列表一</a></dd>
-                        <dd><a th:href="@{'/forward/right'}" target="right">列表二</a></dd>
+                        <dd><a th:href="@{'/forward/kaoqingguanli/attendance'}" target="right">考勤记录</a></dd>
+                        <dd><a th:href="@{'/forward/kaoqingguanli/evection'}" target="right">出差管理</a></dd>
+                        <dd><a th:href="@{'/forward/kaoqingguanli/vacation'}" target="right">休假管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;">绩效考核</a>
                     <dl class="layui-nav-child">
-                        <dd><a th:href="@{'/forward/right'}" target="right">列表一</a></dd>
-                        <dd><a th:href="@{'/forward/right'}" target="right">列表二</a></dd>
+                        <dd><a th:href="@{'/forward/jixiaokaohe/assess'}" target="right">考核信息</a></dd>
+                        <dd><a th:href="@{'/forward/right'}" target="right">考核统计分析</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -185,6 +186,7 @@
                 title: '最终的提交信息'
             })
             return false;
+
         });
 
 

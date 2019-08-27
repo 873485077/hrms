@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.java.dao.VacationMapper">
+
+    <select id="getList" resultType="Vacation">
+        select  vacation_id as vacationId ,staff_id as staffId,vacation_date as vacationDate,
+              vacation_start as vacationStart,vacation_end as vacationEnd,vacation_type as vacationType
+              ,vacation_remark as vacationRemark  from hr_vacation_info limit #{start},#{rows }
+    </select>
+
+  <select id="getCount" resultType="int">
+      select count(*) from hr_vacation_info
+  </select>
+</mapper>      
