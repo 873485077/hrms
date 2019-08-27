@@ -51,9 +51,9 @@ public class StaffDemandController {
      *     page:当前页
      *     limit:每一页要显示的条数
      */
-    @GetMapping("/getStaffDemand")
+    @GetMapping("/getStaffDemandApproving")
     @ResponseBody
-    public Map<String,Object> findStaffDemand(Integer page,Integer limit){
+    public Map<String,Object> getStaffDemandApproving(Integer page,Integer limit){
         System.out.println("数据表格正在请求数据。。。。。。");
         int count =departmentService.getStaffDemandCount();
         List<StaffDemand> list = departmentService.getStaffDemand(page, limit);
@@ -66,8 +66,25 @@ public class StaffDemandController {
                 put("data", list);
             }
         };
-        System.out.println("=============map值："+map);
         return map;
+    }
+
+    @GetMapping("/getStaffDemandApproved")
+    @ResponseBody
+    public Map<String,Object> getStaffDemandApproved(Integer page,Integer limit){
+        System.out.println("数据表格正在请求数据。。。。2。");
+        int count =departmentService.getStaffDemandApprovedCount();
+        List<StaffDemand> approvedList = departmentService.getStaffDemandApproved(page, limit);
+
+        Map<String, Object> approvedMap = new HashMap<String,Object>(){
+            {
+                put("code",0);
+                put("msg","");
+                put("count", count);
+                put("data", approvedList);
+            }
+        };
+        return approvedMap;
     }
 
 }

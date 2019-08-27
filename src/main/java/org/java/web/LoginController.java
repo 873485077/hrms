@@ -1,7 +1,7 @@
 package org.java.web;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * @author ：方裕森
@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
  * @version:
  */
 @Controller
-
 public class LoginController {
 
-    @PostMapping("/login")
+    @GetMapping("/login")
     public String login(){
-        System.out.println("~登录成功~");
-        return "redirect:/index";
+        System.out.println("~跳转登录界面~");
+        return "/login";
     }
 }

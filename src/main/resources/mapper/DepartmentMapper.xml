@@ -6,6 +6,7 @@
             FROM sys_duty du, sys_department de, hr_staff_demand sta
         WHERE du.department_id=de.department_id
             AND du.duty_id=sta.duty_id
+            AND sta.demand_status <![CDATA[ <> ]]> '审批完成'
         limit #{start}, #{rows}
     </select>
 
@@ -14,6 +15,25 @@
             FROM sys_duty du, sys_department de, hr_staff_demand sta
         WHERE du.department_id=de.department_id
             AND du.duty_id=sta.duty_id
+            AND sta.demand_status <![CDATA[ <> ]]> '审批完成'
     </select>
+
+    <select id="getStaffDemandApproved" resultType="org.java.entity.StaffDemand">
+        SELECT demand_title,department_name,demand_status,processInstance_id
+            FROM sys_duty du, sys_department de, hr_staff_demand sta
+        WHERE du.department_id=de.department_id
+            AND du.duty_id=sta.duty_id
+            AND sta.demand_status = '审批完成'
+        limit #{start}, #{rows}
+    </select>
+
+    <select id="getStaffDemandApprovedCount" resultType="int">
+        SELECT count(*)
+            FROM sys_duty du, sys_department de, hr_staff_demand sta
+        WHERE du.department_id=de.department_id
+            AND du.duty_id=sta.duty_id
+            AND sta.demand_status = '审批完成'
+    </select>
+
 
 </mapper>

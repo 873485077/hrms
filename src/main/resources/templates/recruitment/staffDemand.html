@@ -6,12 +6,12 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+    <link rel="stylesheet" th:href="@{'/layui/css/layui.css'}" media="all">
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
     <style type="text/css">
         .layui-form-item .layui-inline { margin-bottom: 0px; }
         .layui-form-item { margin-bottom: 5px; }
-        #layui-table-page1,layui-table-page2 {
+        #layui-table-page1,#layui-table-page2 {
             text-align: center;
         }
     </style>
@@ -55,7 +55,7 @@
         <div class="layui-tab-item">
 
             <!--审批完成的界面-->
-            <table id="approved" lay-filter="test"></table>
+            <table id="approved" lay-filter="test1"></table>
 
 
         </div>
@@ -66,7 +66,7 @@
 <!--tab标签结尾-->
 
 
-<script src="/layui/layui.js" charset="utf-8"></script>
+<script th:src="@{'/layui/layui.js'}" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script type="text/javascript" th:inline="none">
     layui.use(['form', 'layedit', 'laydate','element','table','layer'], function(){
@@ -81,11 +81,11 @@
         // #### 送审中 的 数据表格 ####
         table.render({
             elem: '#approving' //控件的id
-            ,url: '/getStaffDemand' //数据接口
+            ,url: '/getStaffDemandApproving' //数据接口
             ,height: 'auto'
             ,method: 'get'
             ,page: true //开启分页
-            ,limit: 1 //默认每一页显示的条数
+            ,limit: 5 //默认每一页显示的条数
             ,limits: [1, 2, 3, 5, 10, 20, 30, 50]//提示的每页条数的列表
             ,toolbar: '#toolbarDemo' //显示工具栏
             ,title: "征集表" //设置导出文件时的标题
@@ -93,11 +93,12 @@
             ,cols: [
                 [ //表头
                     {field: 'no', type: 'checkbox', width: "3%", fixed: 'left', align: "center"}
-                    ,{field: 'demand_title', title: '招聘主题', width:"37%", align: "center", sort: true}
-                    ,{field: 'department_name', title: '招聘部门', width:"20%", align: "center"}
+                    ,{field: 'id', width: '5%', title: '编号', fixed: 'left', align: "center", type: "numbers"}
+                    ,{field: 'demand_title', title: '招聘主题', width:"30%", align: "center", sort: true}
+                    ,{field: 'department_name', title: '招聘部门', width:"17%", align: "center"}
                     ,{field: 'demand_status', title: '状态', width:"10%", align: "center", sort: true}
                     ,{field: 'processInstance_id', title: '步骤与流程图', width:"15%", align: "center"}
-                    ,{field: 'op', title: '操作', width: "15%", align: "center",templet: '#barDemo'}
+                    ,{field: 'op', title: '操作', width: "20%", align: "center",templet:'#barDemo'}
                 ]
             ]
         });
@@ -105,11 +106,11 @@
         // #### 审批完成 的 数据表格 ####
         table.render({
             elem: '#approved' //控件的id
-            ,url: '/getStaffDemand' //数据接口
+            ,url: '/getStaffDemandApproved' //数据接口
             ,height: 'auto'
             ,method: 'get'
             ,page: true //开启分页
-            ,limit: 1 //默认每一页显示的条数
+            ,limit: 5 //默认每一页显示的条数
             ,limits: [1, 2, 3, 5, 10, 20, 30, 50]//提示的每页条数的列表
             ,toolbar: '#toolbarDemo' //显示工具栏
             ,title: "审批完成" //设置导出文件时的标题
@@ -117,11 +118,12 @@
             ,cols: [
                 [ //表头
                     {field: 'no', type: 'checkbox', width: "3%", fixed: 'left', align: "center"}
-                    ,{field: 'demand_title', title: '招聘主题', width:"37%", align: "center", sort: true}
-                    ,{field: 'department_name', title: '招聘部门', width:"20%", align: "center"}
+                    , {field: 'id', width: '5%', title: '编号', fixed: 'left', align: "center", type: "numbers"}
+                    ,{field: 'demand_title', title: '招聘主题', width:"30%", align: "center", sort: true}
+                    ,{field: 'department_name', title: '招聘部门', width:"17%", align: "center"}
                     ,{field: 'demand_status', title: '状态', width:"10%", align: "center", sort: true}
                     ,{field: 'processInstance_id', title: '步骤与流程图', width:"15%", align: "center"}
-                    ,{field: 'op', title: '操作', width: "15%", align: "center",templet: '#barDemo'}
+                    ,{field: 'op', title: '操作', width: "20%", align: "center",templet: '#barDemo'}
                 ]
             ]
         });
@@ -148,15 +150,67 @@
                 });
             }
         };
-
         $('#layer-btn .layui-btn').on('click', function(){
             var othis = $(this), method = othis.data('method');
             active[method] ? active[method].call(this, othis) : '';
         });
 
+        /*vvvvvvvvvvvvv监听行工具栏事件vvvvvvvvvvvvvvvvv*/
+        //监听工具条
+        table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+            if (layEvent === 'detail') { //查看, 显示详情
+                layer.open({
+                    type: 2,
+                    shade: true,
+                    area: ['500px', '400px'],
+                    maxmin: true,
+                    title: "详情信息",
+                    //anim: 1,
+                    content: projectName + '/forward/detail',
+                    zIndex: layer.zIndex, //重点1
+                    success: function (layero) {
+                        layer.setTop(layero); //重点2
+                        /**查看**弹出新窗体后, 给新窗体的控件赋值**/
+                            //获得弹出层页面的主体部分 body
+                        var body = layui.layer.getChildFrame("body");
+                        //给弹出层body部分的表单控件赋值 / 选择器["name属性='属性值']"]
+                        body.find("[value='"+data.gender+"']").attr("checked",true);
+                        body.find("[name='name']").val(data.name);
+                        body.find("[name='score']").val(data.score);
+                        body.find("[name='tel']").val(data.tel);
+                        //alert("父页面的值是:   "+data.gender+"          本页面的值是: "+body.find("[name='gender']").attr("value"));
+                        body.find("[name='regtime']").val(format(data.regtime,"yyyy-MM-dd"));
+                    }
+                });
+            } else if (layEvent === 'del') { //删除
+                layer.confirm('真的删除行么', function (index) {
+                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                    layer.close(index);
+                    //向服务端发送删除指令
+                    layer.msg("删除")
+
+                });
+            } else if (layEvent === 'edit') { //编辑
+                //do something
+
+                //同步更新缓存对应的值
+                layer.msg("编辑")
+                obj.update({
+                    username: '123'
+                    , title: 'xxx'
+                });
+            }
+        });
+
+
+
     });
 </script>
-<!--工具栏模板：-->
+<!--标题栏左侧工具栏模板：-->
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
         <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" lay-event="add">
@@ -164,7 +218,7 @@
         </button>
     </div>
 </script>
-<!-- 数据表格的操作一栏，引用：-->
+<!-- 数据表格行工具->>>操作一栏，引用：-->
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="detail">流程结构</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">跟踪</a>

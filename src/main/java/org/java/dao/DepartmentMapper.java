@@ -30,4 +30,13 @@ public interface DepartmentMapper {
      */
     int getStaffDemandCount();
 
+    /**
+     * 征集表审核完成
+     */
+    List<StaffDemand> getStaffDemandApproved(@Param("start") int start, @Param("rows") int rows);
+    int getStaffDemandApprovedCount();
+
+
+
+
 }

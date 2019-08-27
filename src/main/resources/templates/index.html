@@ -15,15 +15,15 @@
 
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left" lay-filter="">
-            <li class="layui-nav-item"><a href="">控制台</a></li>
-            <li class="layui-nav-item"><a href="">商品管理</a></li>
-            <li class="layui-nav-item"><a href="">用户</a></li>
+            <li class="layui-nav-item"><a href=""> </a></li>
+            <li class="layui-nav-item"><a href=""> </a></li>
+            <li class="layui-nav-item"><a href=""> </a></li>
             <li class="layui-nav-item">
-                <a href="javascript:;">其它系统</a>
+                <a href="javascript:;"> </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">邮件管理</a></dd>
-                    <dd><a href="">消息管理</a></dd>
-                    <dd><a href="">授权管理</a></dd>
+                    <dd><a href=""> </a></dd>
+                    <dd><a href=""> </a></dd>
+                    <dd><a href=""> </a></dd>
                 </dl>
             </li>
         </ul>
@@ -33,12 +33,12 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    贤心
+                    [[${session.username}]]
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">基本资料</a></dd>
                     <dd><a href="">安全设置</a></dd>
-                    <dd><a href="">退出</a></dd>
+                    <dd><a th:href="@{'/logout'}">退出</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item lockcms" pc>
@@ -125,7 +125,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">系统管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a th:href="@{'/forward/first'}" target="right">查看员工</a></dd>
+                        <dd><a  th:href="@{'/forward/act/act'}" target="right">流程管理</a></dd>
                         <dd><a th:href="@{'/forward/right'}" target="right">列表二</a></dd>
                     </dl>
                 </li>
@@ -133,10 +133,10 @@
         </div>
     </div>
 
-    <div class="layui-body" style="margin-top:8px;height:100%;">
+    <div class="layui-body" style="margin-top:8px;height:95%;">
     <!-- 内容主体区域 -->
         <div class="layui-tab-item layui-show">
-            <iframe name="right" th:src="@{'/forward/right'}" style="width: 100%;height: 100%" frameborder="0"></iframe>
+            <iframe id="right" name="right" th:src="@{'/forward/right'}" style="min-height:600px;width:100%;height:100%;" frameborder="0"></iframe>
         </div>
     </div>
 

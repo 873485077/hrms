@@ -3,7 +3,7 @@
 <mapper namespace="org.java.dao.StaffMapper">
 
     <!--查看员工-->
-    <select id="staff_find" resultType="map">
+    <select id="staffFind" resultType="map">
     SELECT staff_number,staff_name,department_name,duty_name
     FROM hr_staff_info a,sys_duty b,sys_department c
     WHERE a.duty_id = b.duty_id
@@ -12,17 +12,17 @@
     </select>
 
     <!--查询员工表数据总数-->
-    <select id="staff_getCount" resultType="int">
+    <select id="staffGetCount" resultType="int">
         select count(*) from hr_staff_info
     </select>
 
     <!--查看员工详细信息-->
-    <select id="staff_detail" resultType="map" parameterType="int">
+    <select id="staffDetail" resultType="map" parameterType="int">
       select * from hr_staff_info where staff_number = #{staff_number}
     </select>
 
     <!--添加员工信息-->
-    <insert id="staff_add" parameterType="map">
+    <insert id="staffAdd" parameterType="map">
     INSERT INTO hr_staff_info VALUES(uuid(),#{staff_number},#{staff_name},#{sex},#{staff_birthday},
     #{staff_telphone},#{staff_email},#{staff_address},#{staff_birthplace},#{staff_nation},
     #{staff_marriage},#{staff_politics},#{staff_id_number},#{staff_school_record},#{staff_college},
@@ -30,8 +30,20 @@
     #{staff_job_status},#{staff_indepartment_date},#{duty_id},#{original_duty_id},#{staff_salary_day})
     </insert>
 
+    <!--查看详情修改-->
+    <select id="updateStaff" resultType="map" parameterType="int">
+      select * from hr_staff_info where staff_number = #{staff_number}
+    </select>
+
+    <!--修改员工信息-->
+    <update id="staffUpdate" parameterType="map">
+        update hr_staff_info set staff_telphone = #{staff_telphone},staff_email =#{staff_email},
+        staff_address = #{staff_address},staff_marriage = #{staff_marriage}
+        where staff_number = #{staff_number}
+    </update>
+
     <!--查看合同-->
-    <select id="contract_find" resultType="map">
+    <select id="contractFind" resultType="map">
         SELECT d.contract_id,contract_name,staff_name,department_name,contract_status,contract_official,staff_number
         FROM hr_contract_info a,hr_staff_info b,sys_department c,hr_employ_info d
         WHERE d.staff_id = b.staff_id
@@ -40,7 +52,7 @@
     </select>
 
     <!--查看合同详细信息-->
-    <select id="contract_detail" resultType="map" parameterType="int">
+    <select id="contractDetail" resultType="map" parameterType="int">
     SELECT staff_number,staff_name,sex,department_name,duty_name,
     a.contract_id,contract_name,contract_type,contract_deadline_is,contract_official,contract_sign_date,
     contract_status,contract_deadline,contract_official_start,contract_official_end,contract_official_salary
@@ -53,7 +65,7 @@
     </select>
 
     <!--查询离职员工-->
-    <select id="demission_find" resultType="map">
+    <select id="demissionFind" resultType="map">
     SELECT staff_number,staff_name,department_name,demission_type,demission_date
     FROM hr_demission_info a,hr_staff_info b,sys_department c,hr_employ_info d
     WHERE a.staff_id = b.staff_id
@@ -62,7 +74,7 @@
     </select>
 
     <!--查看离职员工详细信息-->
-    <select id="demission_detail" resultType="map" parameterType="int">
+    <select id="demissionDetail" resultType="map" parameterType="int">
     SELECT staff_number,staff_name,department_name,demission_type,demission_date,sex,duty_name,staff_id_number,demission_where,demission_salary_end
     FROM hr_demission_info a,hr_staff_info b,sys_department c,hr_employ_info d,sys_duty e
     WHERE a.staff_id = b.staff_id

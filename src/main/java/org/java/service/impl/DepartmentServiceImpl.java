@@ -33,4 +33,15 @@ public class DepartmentServiceImpl implements DepartmentService {
         return  departmentMapper.getStaffDemandCount();
     }
 
+    @Override
+    public List<StaffDemand> getStaffDemandApproved(int page, int rows) {
+        int start = (page - 1) * rows;
+        return departmentMapper.getStaffDemandApproved(start, rows);
+    }
+
+    @Override
+    public int getStaffDemandApprovedCount() {
+        return  departmentMapper.getStaffDemandApprovedCount();
+    }
+
 }
