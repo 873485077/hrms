@@ -53,14 +53,14 @@ public class StaffController {
         model.addAttribute("rows", rows);
         model.addAttribute("count", count);
         model.addAttribute("maxPage", maxPage);
-        return "/main";
+        return "/staff/main";
     }
 
     @RequestMapping("/staff_detail/{staff_number}")
     public String staffDetail(Model model, @PathVariable("staff_number") int staff_number){
         List<Map> list = service.staffDetail(staff_number);
         model.addAttribute("list",list);
-        return "/staff_detail";
+        return "/staff/staff_detail";
     }
 
     @RequestMapping("/staff_add")
@@ -73,7 +73,7 @@ public class StaffController {
     public String updateStaff(Model model, @PathVariable("staff_number") int staff_number){
         Map m = service.updateStaff(staff_number);
         model.addAttribute("m",m);
-        return "/staff_update";
+        return "/staff/staff_update";
     }
 
     @RequestMapping("/staff_update")
@@ -111,14 +111,14 @@ public class StaffController {
         model.addAttribute("maxPage", maxPage);
 
 
-        return "/contract_find";
+        return "/staff/contract_find";
     }
 
     @RequestMapping("/contract_detail/{staff_number}")
     public String contractDetail(Model model, @PathVariable("staff_number") int staff_number){
         List<Map> list = service.contractDetail(staff_number);
         model.addAttribute("list",list);
-        return "/contract_detail";
+        return "/staff/contract_detail";
     }
 
     @RequestMapping(value = {"/demission_find","demission_find/{page}"})
@@ -142,7 +142,7 @@ public class StaffController {
         model.addAttribute("count", count);
         model.addAttribute("maxPage", maxPage);
 
-        return "/demission_find";
+        return "/staff/demission_find";
     }
 
 
@@ -150,7 +150,7 @@ public class StaffController {
     public String demissionDetail(Model model, @PathVariable("staff_number") int staff_number){
         List<Map> list = service.demissionDetail(staff_number);
         model.addAttribute("list",list);
-        return "/demission_detail";
+        return "/staff/demission_detail";
     }
 
 }
