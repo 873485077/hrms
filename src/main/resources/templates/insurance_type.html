@@ -29,9 +29,10 @@
                     <td th:text="${m.insurance_period}"></td>
                     <td th:text="${m.insurance_money}+'元'"></td>
                     <td>
+                        <!--"-->
                         <a th:href="@{'/forward/insurance_typeAdd'}" class="btn  btn-success">添加</a>
-                        @{|/del/${m.insurance_type_id}|}<a th:href="" id="btn1" class="btn   btn-warning"
-                           >删除</a>
+                        <a th:href="@{|/del/${m.insurance_type_id}|}" id="btn1" class="btn   btn-warning"
+                           onclick="return confirm('确定删除吗')">删除</a>
                         <a th:href="@{|/modify/${m.insurance_type_id}|}" class="btn bg-primary">修改</a>
                         <a th:href="@{'/insurance_manage'}" class="btn   btn-danger">查询</a>
                     </td>
@@ -68,33 +69,7 @@
 
             </table>
             </div>
-            <script>
-                $(function(){
-                    /**************确认消息框开始************************/
-                    $("#btn1").click(function(){
-                        alert("!")
-                        swal({
-                            title: '你确定吗?',
-                            text: "数据删除将无法恢复!",
-                            type: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: '是的，删除它!',
-                            cancelButtonText: '取消，我再想想!'
-                        }).then((result) => {
-                            if (result.value) {
-                                swal(
-                                    '删除!',
-                                    '数据删除成功！',
-                                    'success'
-                                )
-                            }
-                        })
-                    });
-                    /*************确认消息框结构*************************/
-                });
-            </script>
+
 
 
 
