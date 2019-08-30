@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link th:href="@{'/css/bootstrap.min.css'}" rel="stylesheet" type="text/css">
+    <script th:src="@{'/js/jquery-1.12.4.js'}"></script>
+    <script th:src="@{'/js/bootstrap.min.js'}"></script>
+</head>
+<body>
+
+        <form th:action="@{'/tax'}" method="post">
+            <div class="container col-md-12 col-md-offset-0" >
+            <table align="center" border="0" width="60%" class="table table-bordered table-striped table-hover">
+                    <tr>
+                      <td colspan="2" align="center" style="color: #122b40">个人薪资</td>
+                    </tr>
+                <tr>
+                    <td>本月工资</td>
+                    <td> <input type="text" name="salary" id="salary" required="required"
+                                onkeyup="if (/\D/g.test(this.value)){
+                                    alert('只能输入数字');this.value='';
+                            } ">
+                    </td>
+                </tr>
+                <tr>
+                    <td>   各项社会保险费</td>
+                    <td>  <input type="text" name="premium" id="premium" required="required" onkeyup="if (/\D/.test(this.value)){
+                                    alert('只能输入数字');this.value='';
+                    } "></td>
+                </tr>
+                <tr>
+                    <td>专项附加扣除</td><td>  <input type="text" name="deduct" id="deduct" required="required" onkeyup="if (/\D/.test(this.value)){
+                                    alert('只能输入数字');this.value='';
+                    } "></td>
+                </tr>
+                <!--********************************************-->
+                <tr>
+                    <td>迟到</td><td>  <input type="text" name="late" id="late" required="required" onkeyup="if (/\D/.test(this.value)){
+                                    alert('只能输入数字');this.value='';
+                    } "></td>
+                </tr>
+                <tr>
+                    <td>早退</td><td>  <input type="text" name="leave" id="leave" required="required" onkeyup="if (/\D/.test(this.value)){
+                                    alert('只能输入数字');this.value='';
+                    } "></td>
+                </tr>
+                <tr>
+                    <td>旷工</td><td>  <input type="text" name="absenteeism" id="absenteeism" required="required" onkeyup="if (/\D/.test(this.value)){
+                                    alert('只能输入数字');this.value='';
+                    } "></td>
+                </tr>
+                <tr>
+                    <td>事假</td><td>  <input type="text" name="personalDay" id="personalDay" required="required" onkeyup="if (/\D/.test(this.value)){
+                                    alert('只能输入数字');this.value='';
+                    } "></td>
+                </tr>
+                <tr>
+                    <td>休息加班</td><td>  <input type="text" name="workovertime" id="workovertime" required="required" onkeyup="if (/\D/.test(this.value)){
+                                    alert('只能输入数字');this.value='';
+                    } "></td>
+                </tr>
+                <!--********************************************-->
+                <tr>
+                    <td colspan="2" >
+                        <input type="submit" value="计算" style="color: darkcyan" onclick="aaa()" class="btn  ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="reset" value="重置" style="color:dimgray" class="btn  ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" onclick="history.back()" class="btn btn-info">返回</button>
+                    </td>
+                </tr>
+            </table>
+            </div>
+        </form>
+        <script>
+            function aaa() {
+                var num = document.getElementById("salary");
+                if (num.value<5000){
+                    alert("金额必须大于五千，无效的金额");
+                }
+            }
+        </script>
+
+</body>
+</html>

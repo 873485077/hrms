@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.java.dao.UserMapper">
+    <select id="login" resultType="map">
+        SELECT * FROM sys_user WHERE username =#{username}
+    </select>
+
+    <select id="checkName" resultType="boolean">
+        select * from sys_user where user_name= #{user_name}
+    </select>
+</mapper>
