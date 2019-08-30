@@ -6,6 +6,7 @@ import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,6 +38,7 @@ public class ProcessDefinitionController {
      * 部署流程定义
      * @return
      */
+    @Transactional
     @RequestMapping("/act/deploy")
     @ResponseBody
     public String deploy(@RequestParam("pngFile") MultipartFile pngFile, @RequestParam("bpmnFile") MultipartFile bpmnFile) throws IOException {
@@ -134,6 +136,7 @@ public class ProcessDefinitionController {
      * @param deploymentId
      * @return
      */
+    @Transactional
     @GetMapping("/act/del/{deploymentId}")
     @ResponseBody
     public String delProcessDefinition(@PathVariable("deploymentId") String deploymentId){

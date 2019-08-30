@@ -34,8 +34,10 @@ spring:
   activiti:
     database-schema: update #数据activiti数据表已存在继续使用，不存在，则创建
     check-process-definitions: false  #不检测bpmn文件是否存在
+
+
 mybatis:
+
   mapper-locations: mapper/*Mapper.xml
   type-aliases-package: org.java.entity #自动给实体类起别名
-
 

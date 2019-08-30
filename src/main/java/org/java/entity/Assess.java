@@ -1,5 +1,7 @@
 package org.java.entity;
 
+import org.apache.ibatis.type.Alias;
+
 import java.io.Serializable;
 
 /**
@@ -7,7 +9,7 @@ import java.io.Serializable;
  * @date:2019/8/26 {HOUR}:{MTNUTE}
  * @Description:
  */
-
+@Alias("Assess")
 public class Assess implements Serializable {
 
     private Integer assessId;

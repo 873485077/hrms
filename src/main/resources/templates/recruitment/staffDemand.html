@@ -122,7 +122,7 @@
                     ,{field: 'demand_title', title: '招聘主题', width:"30%", align: "center", sort: true}
                     ,{field: 'department_name', title: '招聘部门', width:"17%", align: "center"}
                     ,{field: 'demand_status', title: '状态', width:"10%", align: "center", sort: true}
-                    ,{field: 'processInstance_id', title: '步骤与流程图', width:"15%", align: "center"}
+                    ,{field: 'processInstance_id', title: '流程实例ID', width:"15%", align: "center"}
                     ,{field: 'op', title: '操作', width: "20%", align: "center",templet: '#barDemo'}
                 ]
             ]
@@ -137,15 +137,15 @@
                 layer.open({
                     type: 2 //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
                     ,title:'添加招聘计划'
-                    ,offset: '30px' //窗口顶边距
-                    ,area: ['900px', '500px'] //窗口大小
+                    ,offset: 'auto' //窗口顶边距
+                    ,area: ['900px', '700px'] //窗口大小
                     ,id: 'layerBtn'+type //防止重复弹出
-                    ,content: '/forward/recruitment/addStaffDemand' //弹出窗引用的内容
+                    ,content: '/addStaffDemand/add' //弹出窗引用的内容
                     ,btnAlign: 'c' //按钮居中
                     ,shade: 1 //不显示遮罩
                     ,shadeClose: true //点击外层关闭遮罩
-                    ,yes: function(){
-                        layer.closeAll();
+                    ,success : function(layero){ //层弹出后回调
+
                     }
                 });
             }
@@ -162,15 +162,16 @@
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的DOM对象
 
-            if (layEvent === 'detail') { //查看, 显示详情
+            if (layEvent === 'detail' || layEvent === 'edit') { //查看, 显示详情
                 layer.open({
                     type: 2,
-                    shade: true,
-                    area: ['500px', '400px'],
+                    shade: 0.5,//不显示遮罩
+                    shadeClose: true, //点击外层关闭遮罩
+                    area: ['900px', '700px'],
                     maxmin: true,
                     title: "详情信息",
                     //anim: 1,
-                    content: projectName + '/forward/detail',
+                    content: '/addStaffDemand/'+layEvent,
                     zIndex: layer.zIndex, //重点1
                     success: function (layero) {
                         layer.setTop(layero); //重点2
@@ -178,14 +179,25 @@
                             //获得弹出层页面的主体部分 body
                         var body = layui.layer.getChildFrame("body");
                         //给弹出层body部分的表单控件赋值 / 选择器["name属性='属性值']"]
-                        body.find("[value='"+data.gender+"']").attr("checked",true);
-                        body.find("[name='name']").val(data.name);
-                        body.find("[name='score']").val(data.score);
-                        body.find("[name='tel']").val(data.tel);
-                        //alert("父页面的值是:   "+data.gender+"          本页面的值是: "+body.find("[name='gender']").attr("value"));
-                        body.find("[name='regtime']").val(format(data.regtime,"yyyy-MM-dd"));
+                        body.find("[name='demandTitle']").val(data.demand_title); //标题
+                        body.find("[name='demandAmount']").val(data.demand_amount); //人数
+                        var arr = data.salary_range.split("-"); //薪资拆分
+                        body.find("[name='salary_min']").val(arr[0]); //薪资min
+                        body.find("[name='salary_max']").val(arr[1]); //薪资max
+
+                        body.find("[name='startDate']").val(format(data.start_date,"yyyy-MM-dd")); //开始时间
+                        body.find("[name='finishDate']").val(format(data.finish_date,"yyyy-MM-dd")); //结束时间
+                        body.find("[name='jobRequire']").val(data.job_require); //岗位要求
+                        body.find("[name='jobContent']").val(data.job_content); //内容明细
+                        body.find("[name='remark']").val(data.remark); //备注
+                        form.render('select');
+                        body.find("[name='department']").val(data.department_id); //部门data.department_name
+                        body.find("[name='dutyId']").val(data.duty_id); //职务data.department_name
+                        body.find("[name='recruitWay']").val(data.recruit_way); //招聘方式
+
                     }
-                });
+
+                })
             } else if (layEvent === 'del') { //删除
                 layer.confirm('真的删除行么', function (index) {
                     obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
@@ -194,18 +206,40 @@
                     layer.msg("删除")
 
                 });
-            } else if (layEvent === 'edit') { //编辑
-                //do something
-
-                //同步更新缓存对应的值
-                layer.msg("编辑")
-                obj.update({
-                    username: '123'
-                    , title: 'xxx'
-                });
             }
         });
 
+
+        //时间相关工具
+        var format = function (time, format) {
+            var t = new Date(time);
+            var tf = function (i) {
+                return (i < 10 ? '0' : '') + i
+            };
+            return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
+                switch (a) {
+                    case 'yyyy':
+                        return tf(t.getFullYear());
+                        break;
+                    case 'MM':
+                        return tf(t.getMonth() + 1);
+                        break;
+                    case 'mm':
+                        return tf(t.getMinutes());
+                        break;
+                    case 'dd':
+                        return tf(t.getDate());
+                        break;
+                    case 'HH':
+                        return tf(t.getHours());
+                        break;
+                    case 'ss':
+                        return tf(t.getSeconds());
+                        break;
+                }
+            })
+
+        }
 
 
     });
@@ -220,9 +254,9 @@
 </script>
 <!-- 数据表格行工具->>>操作一栏，引用：-->
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="detail">流程结构</a>
-    <a class="layui-btn layui-btn-xs" lay-event="edit">跟踪</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">打印</a>
+    <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="commit">提交</a>
     <!-- 这里同样支持 laytpl 语法，如： -->
     {{#  if(d.auth > 2){ }}
     <a class="layui-btn layui-btn-xs" lay-event="check">审核</a>

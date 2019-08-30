@@ -18,11 +18,11 @@
 <!-- 招聘计划申请 添加的页面 -->
 
 
-<form class="layui-form layui-form-pane" th:action="${'/addStaffDemand'}" method="post"  lay-filter="example">
+<form class="layui-form layui-form-pane" th:action="${'/addStaffDemand/commit/{mode}'}" method="post"  lay-filter="example">
     <div class="layui-form-item "  style="width: 817px">
         <label class="layui-form-label">征集主题</label>
         <div class="layui-input-block">
-            <input type="text" name="demand_title" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+            <input type="text" name="demandTitle" lay-verify="title" autocomplete="off" placeholder="请输入标题"
                    class="layui-input">
         </div>
     </div>
@@ -43,7 +43,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">招聘职务</label>
             <div class="layui-input-inline" style="width: 190px">
-                <select name="duty_id" lay-verify="required" lay-search="">
+                <select name="dutyId" lay-verify="required" lay-search="">
                     <option value="">直接选择或搜索选择</option>
                     <option value="1">普通职员</option>
                     <option value="2">部门经理</option>
@@ -56,7 +56,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">招聘人数</label>
             <div class="layui-input-inline" style="width: 61px">
-                <input type="text" name="demand_amount" lay-verify="required" autocomplete="off" placeholder="请输入"
+                <input type="text" name="demandAmount" lay-verify="required" autocomplete="off" placeholder="请输入"
                        class="layui-input">
             </div>
         </div>
@@ -65,13 +65,13 @@
         <div class="layui-inline">
             <label class="layui-form-label">招聘方式</label>
             <div class="layui-input-inline">
-                <select name="recruit_way" lay-verify="required" lay-search="">
+                <select name="recruitWay" lay-verify="required" lay-search="">
                     <option value="">直接选择或搜索选择</option>
-                    <option value="1">内部招聘</option>
-                    <option value="2">广告媒体</option>
-                    <option value="3">人才市场</option>
-                    <option value="4">现场招聘</option>
-                    <option value="5">网络招聘</option>
+                    <option value="内部招聘">内部招聘</option>
+                    <option value="广告媒体">广告媒体</option>
+                    <option value="人才市场">人才市场</option>
+                    <option value="现场招聘">现场招聘</option>
+                    <option value="网络招聘">网络招聘</option>
                 </select>
             </div>
         </div>
@@ -90,26 +90,26 @@
         <div class="layui-inline">
             <label class="layui-form-label">开始日期</label>
             <div class="layui-input-inline" style="width:287px">
-                <input type="text" name="start_date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                <input type="text" name="startDate" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">完成日期</label>
             <div class="layui-input-inline" style="width:287px">
-                <input type="text" name="finish_date" id="date1" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                <input type="text" name="finishDate" id="date1" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
     <div class="layui-form-item layui-form-text" style="width: 816px;">
         <label class="layui-form-label">岗位要求</label>
         <div class="layui-input-block">
-            <textarea name="job_require" style="height: 100px" placeholder="请输入内容" class="layui-textarea"></textarea>
+            <textarea name="jobRequire" style="height: 100px" placeholder="请输入内容" class="layui-textarea"></textarea>
         </div>
     </div>
     <div class="layui-form-item layui-form-text" style="width: 816px;">
         <label class="layui-form-label">内容明细</label>
         <div class="layui-input-block">
-            <textarea name="job_content" id="text" placeholder="请输入内容" class="layui-textarea"></textarea>
+            <textarea name="jobContent" id="text" placeholder="请输入内容" class="layui-textarea"></textarea>
         </div>
     </div>
     <div class="layui-form-item layui-form-text" style="width: 816px;">
@@ -120,8 +120,9 @@
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button type="submit" class="layui-btn " lay-submit="" lay-filter="demo1">立即提交</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            <button th:if="${mode eq 'add'}" type="submit" class="layui-btn " lay-submit="" lay-filter="demo1">立即提交</button>
+            <button th:if="${mode eq 'add'}" type="reset" class="layui-btn layui-btn-primary">重置</button>
+            <button th:if="${mode eq 'edit'} "type="submit" class="layui-btn " lay-submit="" lay-filter="demo1">确定修改</button>
         </div>
     </div>
 </form>
@@ -134,10 +135,8 @@
             ,layer = layui.layer
             ,layedit = layui.layedit
             ,laydate = layui.laydate;
-
         //富文本
         //layedit.build('text');
-
         //日期
         laydate.render({
             elem: '#date'
@@ -195,20 +194,21 @@
         });*/
 
         //表单初始赋值
-        form.val('example', {
-            "demand_title":"这是一条征集的主题"
+
+        /*form.val('example', {
+            "demandTitle":"这是一条征集的主题 000"
             ,"department":1
-            ,"duty_id":1
-            ,"demand_amount":"3"
-            ,"recruit_way":5
+            ,"dutyId":1
+            ,"demandAmount":"3"
+            ,"recruitWay":"网络招聘"
             ,"salary_min":500
             ,"salary_max":5000
-            ,"start_date":"2019-08-16"
-            ,"finish_date":"2019-12-16"
-            ,"job_require":"岗位要求测试0002"
-            ,"job_content":"内容明细测试0002"
+            ,"startDate":"2019-08-16"
+            ,"finishDate":"2019-12-16"
+            ,"jobRequire":"岗位要求测试0002"
+            ,"jobContent":"内容明细测试0002"
             ,"remark":"备注信息测试0001"
-        })
+        })*/
 
 
     });

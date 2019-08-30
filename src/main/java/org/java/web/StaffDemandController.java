@@ -2,14 +2,13 @@ package org.java.web;
 
 import org.java.entity.StaffDemand;
 import org.java.service.DepartmentService;
+import org.java.service.EmployProcessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,20 +24,59 @@ import java.util.Map;
 public class StaffDemandController {
 
     @Autowired
-    private DepartmentService departmentService;
+    private EmployProcessService service;
+    @Autowired
+    private DepartmentService departmentService; //流程定义服务
+
+    /**
+     * 跳转 增/删/改方法
+     * @param mode
+     * @param model
+     * @return
+     */
+    @RequestMapping("/addStaffDemand/{mode}")
+    public String addStaffDemand(@PathVariable("mode") String mode, Model model){
+        model.addAttribute("mode", mode);
+        System.out.println("模式是:"+mode);
+        return "/recruitment/addStaffDemand";
+    }
 
     /**
      * 添加员工需求征集审核表
-     * @param model
-     * @param map
-     * @return
      */
-    @PostMapping("/addStaffDemand")
-    public String addStaffDemand(Model model,@RequestParam Map map){
+    @RequestMapping("/addStaffDemand/commit/{mode}")
+    public String addStaffDemand(@RequestParam Map map,HttpSession session,@PathVariable("mode") String mode){
+        System.out.println("addStaffDemand-"+mode);
+        //通过service层实现 1/启动流程实例 2/向数据表添加一条业务数据
+        //获取用户名,create_user是数据表对应的字段
+        String createUser = (String) session.getAttribute("username");
+        map.put("creatUser", createUser);
+        //拼接薪资范围
+        String salary_range = map.get("salary_min") + "-" + map.get("salary_max");
+        map.put("salaryRange", salary_range);
 
-        System.out.println(map);
+        switch (mode){
+            case "add":
+                int staffDemandCount = service.createStaffDemand(map);//调用service层
+                if (staffDemandCount>0){
+                    System.out.println("添加员工需求征集审核表 - 成功");
+                }else{
+                    System.out.println("添加员工需求征集审核表 - 成功");
+                }
+                break;
+            case "detail":
+                System.out.println("准备修改信息");
+                break;
+            case "del":
+                System.out.println("准备删除信息");
+        }
+
+
+
         return "redirect:/forward/recruitment/addStaffDemand";
+
     }
+
 
     /**
      * 这是职员征集表的数据表格，调用的请求，会自动传入两个参数进来（page和limit），需要返回map
@@ -51,7 +89,7 @@ public class StaffDemandController {
      *     page:当前页
      *     limit:每一页要显示的条数
      */
-    @GetMapping("/getStaffDemandApproving")
+    @GetMapping("/getStaffDemandApproving")  //未提交的申请表
     @ResponseBody
     public Map<String,Object> getStaffDemandApproving(Integer page,Integer limit){
         System.out.println("数据表格正在请求数据。。。。。。");
@@ -66,10 +104,11 @@ public class StaffDemandController {
                 put("data", list);
             }
         };
+        System.out.println(map);
         return map;
     }
 
-    @GetMapping("/getStaffDemandApproved")
+    @GetMapping("/getStaffDemandApproved")   //已提交的申请表
     @ResponseBody
     public Map<String,Object> getStaffDemandApproved(Integer page,Integer limit){
         System.out.println("数据表格正在请求数据。。。。2。");

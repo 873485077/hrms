@@ -31,7 +31,7 @@
                 部署流程定义
             </button>
             <iframe id="deployManage" name="deployManage" th:src="@{'/forward/act/showProcessDefinition'}"
-                    frameborder="0" style="min-height: 500px;width:100%;height:100%;"
+                    frameborder="0" style="min-height: 400px;width:100%;height:100%;"
                     οnlοad="this.height=deployManage.document.body.scrollHeight;parent.document.getElementById('right').style.height= document.body.scrollHeight + 'px';"></iframe>
         </div>
         <!--流程定义，结束标签-->
@@ -75,8 +75,8 @@
                         layer.closeAll();
                     }
                 });
-            },
-            //查看部署流程定义
+            }
+            /*//查看部署流程定义
             showDeploy: function (othis) {
                 var type = othis.data('type')
                     , text = othis.text();
@@ -94,7 +94,7 @@
                         layer.closeAll();
                     }
                 });
-            }
+            }*/
         };
         $('#layer-btn .layui-btn').on('click', function () {
             var othis = $(this), method = othis.data('method');

@@ -52,11 +52,11 @@
                     ,{field: 'number', width: '5%', title: '序号', fixed: 'left', align: "center", type: "numbers"}
                     ,{field: 'id', width: '20%', title: '流程定义id', fixed: 'left', align: "center"}
                     ,{field: 'deploymentId', title: '流程部署id', width:"10%", align: "center", sort: true}
-                    ,{field: 'version', title: '版本', width:"5%", align: "center"}
+                    ,{field: 'version', title: '版本', width:"7%", align: "center"}
                     ,{field: 'key', title: 'key', width:"10%", align: "center"}
                     ,{field: 'diagramResourceName', title: 'png', width:"15%", align: "center",templet:'#pngResource'}
                     ,{field: 'resourceName', title: 'bpmn', width: "15%", align: "center",templet:'#bpmnResource'}
-                    ,{field: 'op', title: '操作', width: "17%", align: "center",templet: '#barDemo'}
+                    ,{field: 'op', title: '操作', width: "15%", align: "center",templet: '#barDemo'}
 
                 ]
             ]
@@ -86,50 +86,49 @@
                         }
                     })
                 });
-            }else if (layEvent === 'showRes') {  //查看png
+            }else if (layEvent === 'showRes') {  //查看bpmn/png
                 //触发事件
                 var active = {
                     offsetBpmn: function(othis){
                         var type = othis.data('type')
-                            ,text = othis.text();
+                            ,text = othis.text()
+                            ,req = '/showResource/'+data.deploymentId+'/'+data.resourceName;
                         parent.layer.open({
                             type: 2
-                            ,content: '/showResource/'+data.deploymentId+'/'+data.resourceName
+                            ,content: req
                             ,offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
                             ,id: 'layerDemo'+type //防止重复弹出
-                            ,title: data.resourceName+'预览'
+                            ,title: false
                             //,btn: '关闭全部'
-                            ,btnAlign: 'c' //按钮居中
+                            //,btnAlign: 'c' //按钮居中
                             ,area: ['800px','500px']
-                            ,skin: "layui-center"
+                            ,skin: "yourclass"
                             ,shade: 0.5 //不显示遮罩
                             ,shadeClose: true
                             ,success: function(res){
-
                             }
-
-                        });
+                    })
                     }
                     ,offsetPng: function(othis){
                         var type = othis.data('type')
-                            ,text = othis.text();
+                            ,text = othis.text()
                         parent.layer.open({
                             type: 2
                             ,content: '/showResource/'+data.deploymentId+'/'+data.diagramResourceName
                             ,offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
                             ,id: 'layerDemo'+type //防止重复弹出
-                            ,title: data.diagramResourceName+'预览'
+                            ,title: false
                             //,btn: '关闭全部'
-                            ,btnAlign: 'c' //按钮居中
-                            ,area: ['800px','500px']
-                            ,skin: "layui-center"
+                            //,btnAlign: 'c' //按钮居中
+                            ,area: ['900px','550px']
+                            ,skin: "yourclass"
                             ,shade: 0.5 //不显示遮罩
                             ,shadeClose: true
                             ,success: function(res){
-
                             }
 
                         });
+
                     }
                 };
 

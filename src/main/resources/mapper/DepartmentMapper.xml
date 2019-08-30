@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.java.dao.DepartmentMapper">
-    <select id="getStaffDemand" resultType="org.java.entity.StaffDemand">
+    <!--<select id="getStaffDemand" resultType="staffDemand">
         SELECT demand_title,department_name,demand_status,processInstance_id
+            FROM sys_duty du, sys_department de, hr_staff_demand sta
+        WHERE du.department_id=de.department_id
+            AND du.duty_id=sta.duty_id
+            AND sta.demand_status <![CDATA[ <> ]]> '审批完成'
+        limit #{start}, #{rows}
+    </select>-->
+    <select id="getStaffDemand" resultType="staffDemand">
+        SELECT sta.*,department_name,duty_name,de.department_id
             FROM sys_duty du, sys_department de, hr_staff_demand sta
         WHERE du.department_id=de.department_id
             AND du.duty_id=sta.duty_id
@@ -18,7 +26,7 @@
             AND sta.demand_status <![CDATA[ <> ]]> '审批完成'
     </select>
 
-    <select id="getStaffDemandApproved" resultType="org.java.entity.StaffDemand">
+    <select id="getStaffDemandApproved" resultType="staffDemand">
         SELECT demand_title,department_name,demand_status,processInstance_id
             FROM sys_duty du, sys_department de, hr_staff_demand sta
         WHERE du.department_id=de.department_id
