@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{'/css/bootstrap.min.css'}" type="text/css" rel="stylesheet">
+    <link th:href="@{'/css/my.css'}" type="text/css" rel="stylesheet">
+    <script th:src="@{'/js/bootstrap.min.js'}"></script>
+
+</head>
+<body>
+<h2>员工保险</h2>
+<!--偏移-->
+<div class="container col-md-12 col-md-offset-0">
+    <table class="table table-bordered table-striped table-hover">
+        <tr>
+            <th>工号</th>
+            <th>员工姓名</th>
+            <th>保险类型</th>
+            <th>保险单号</th>
+            <th>登记时间</th>
+            <th>个人支付金额</th>
+            <th>单位支付金额</th>
+            <th>操作</th>
+        </tr>
+
+        <tr th:each="m ,st:${list}">
+            <td th:text="${m.staff_number}"></td>
+            <td th:text="${m.staff_name}" ></td>
+            <td th:text="${m.insurance_type}" ></td>
+            <td th:text="${m.insurance_number}" ></td>
+            <td th:text="${m.insurance_date}" ></td>
+            <td th:text="${m.insurance_person}+'元'" ></td>
+            <td th:text="${m.insurance_company}+'元'" ></td>
+            <td>
+                <a th:href="@{'/forward/insurance_manageAdd'}" class="btn  btn-success">添加</a>
+                <a th:href="@{|/delB/${m.insurance_id}|}" class="btn   btn-warning"
+                   onclick="return confirm('你确定要删除数据吗?')">删除</a>
+                <a th:href="@{|/modifyB/${m.insurance_id}|}" class="btn bg-primary">修改</a>
+            </td>
+        </tr>
+
+        <tr>
+            <td th:colspan="8">
+                <b th:if="${pageB eq 1}">
+                    首页
+                    上一页
+                </b>&nbsp;&nbsp;&nbsp;
+                <b th:if="${pageB gt 1}">
+                    <a th:href="@{'/insurance_manage/1'}">首页</a>
+                    <A th:href="@{|/insurance_manage/${pageB-1}|}">上一页</A>
+                </b>&nbsp;&nbsp;&nbsp;
+                <b th:if="${pageB eq maxPageB}">
+                    下一页
+                    尾页
+                </b>&nbsp;&nbsp;&nbsp;
+                <b th:if="${pageB lt maxPageB}">
+                    <a th:href="@{|/insurance_manage/${pageB+1}|}">下页</a>
+                    <A th:href="@{|/insurance_manage/${maxPageB}|}">尾页</A>
+                </b>&nbsp;&nbsp;&nbsp;
+                共<b class="mb">[[${countB}]]</b>条&nbsp;&nbsp;&nbsp;
+                每页<b class="mb">[[${rowsB}]]</b>条&nbsp;&nbsp;&nbsp;
+                共<b class="mb">[[${maxPageB}]]</b>页&nbsp;&nbsp;&nbsp;
+                <select name="pageB" th:onchange="location.href='/insurance_type/'+this.value">
+                    <div th:each="k:${#numbers.sequence(1,maxPageB)}">
+                        <option th:value="${k}" th:attr="selected=${k==pageB?true:false}">第[[${k}]]页</option>
+                    </div>
+                </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" onclick="history.back()" class="btn btn-info">返回</button>
+            </Td>
+            </td>
+        </tr>
+
+
+
+    </table>
+</div>
+</body>
+</html>

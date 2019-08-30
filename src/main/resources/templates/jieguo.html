@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{'/css/bootstrap.min.css'}" type="text/css" rel="stylesheet">
+    <link th:href="@{'/css/my.css'}" type="text/css" rel="stylesheet">
+    <script th:src="@{'/js/bootstrap.min.js'}"></script>
+</head>
+<body>
+<div class="container col-md-12 col-md-offset-0">
+
+            <table align="center" border="1" width="60%" class="table table-bordered table-striped table-hover">
+
+                <tr>
+                    <td>本月工资</td>
+                    <td>[[${salary}]]元</td>
+                </tr>
+                <tr>
+                    <td>起征金额</td>
+                    <td>5000元</td>
+                </tr>
+                <tr>
+                    <td>应纳税所得额</td>
+                    <td>[[${taxable}]]元</td>
+                </tr>
+                <tr>
+                    <td>适用税率</td>
+                    <td>[[${percent}]]%</td>
+                </tr>
+                <tr>
+                    <td>应缴税款</td>
+                    <td>[[${jsq}]]元</td>
+                </tr>
+                <tr>
+                    <td>本月税后收入</td>
+                    <td>[[${pay}]]元</td>
+                </tr>
+
+                <tr>
+                    <td>本月实发工资</td>
+                    <td>[[${payroll}]]元</td>
+                </tr>
+            </table>
+    <button type="button" onclick="history.back()" class="btn btn-info">返回</button>
+    <!--<a th:href="@{'/payroll'}" class="btn   btn-danger">实发工资</a>-->
+</div>
+</body>
+</html>

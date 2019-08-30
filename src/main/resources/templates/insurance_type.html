@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{'/css/bootstrap.min.css'}" type="text/css" rel="stylesheet">
+    <link th:href="@{'/css/my.css'}" type="text/css" rel="stylesheet">
+    <script th:src="@{'/js/bootstrap.min.js'}"></script>
+
+    <link rel="stylesheet" href="css/sweetalert2.min.css">
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/sweetalert2.min.js"></script>
+
+</head>
+<body>
+            <h2>保险类型</h2>
+                                                <!--偏移-->
+            <div class="container col-md-12 col-md-offset-0">
+            <table class="table table-bordered table-striped table-hover">
+                <tr>
+                    <th>保险类型</th>
+                    <th>保险周期</th>
+                    <th>保险金额</th>
+                    <th>操作</th>
+                </tr>
+
+                <tr th:each="m ,st:${list}">
+                    <td th:text="${m.insurance_type}"></td>
+                    <td th:text="${m.insurance_period}"></td>
+                    <td th:text="${m.insurance_money}+'元'"></td>
+                    <td>
+                        <a th:href="@{'/forward/insurance_typeAdd'}" class="btn  btn-success">添加</a>
+                        @{|/del/${m.insurance_type_id}|}<a th:href="" id="btn1" class="btn   btn-warning"
+                           >删除</a>
+                        <a th:href="@{|/modify/${m.insurance_type_id}|}" class="btn bg-primary">修改</a>
+                        <a th:href="@{'/insurance_manage'}" class="btn   btn-danger">查询</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td th:colspan="4">
+                        <b th:if="${page eq 1}">
+                            首页
+                            上一页
+                        </b>&nbsp;&nbsp;&nbsp;
+                        <b th:if="${page gt 1}">
+                            <a th:href="@{'/insurance_type/1'}">首页</a>
+                            <A th:href="@{|/insurance_type/${page-1}|}">上一页</A>
+                        </b>&nbsp;&nbsp;&nbsp;
+                        <b th:if="${page eq maxPage}">
+                            下一页
+                            尾页
+                        </b>&nbsp;&nbsp;&nbsp;
+                        <b th:if="${page lt maxPage}">
+                            <a th:href="@{|/insurance_type/${page+1}|}">下页</a>
+                            <A th:href="@{|/insurance_type/${maxPage}|}">尾页</A>
+                        </b>&nbsp;&nbsp;&nbsp;
+                        共<b class="mb">[[${count}]]</b>条&nbsp;&nbsp;&nbsp;
+                        每页<b class="mb">[[${rows}]]</b>条&nbsp;&nbsp;&nbsp;
+                        共<b class="mb">[[${maxPage}]]</b>页&nbsp;&nbsp;&nbsp;
+                        <select name="page" th:onchange="location.href='/insurance_type/'+this.value">
+                            <div th:each="k:${#numbers.sequence(1,maxPage)}">
+                                <option th:value="${k}" th:attr="selected=${k==page?true:false}">第[[${k}]]页</option>
+                            </div>
+                        </select>
+                    </Td>
+                    </td>
+                </tr>
+
+            </table>
+            </div>
+            <script>
+                $(function(){
+                    /**************确认消息框开始************************/
+                    $("#btn1").click(function(){
+                        alert("!")
+                        swal({
+                            title: '你确定吗?',
+                            text: "数据删除将无法恢复!",
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: '是的，删除它!',
+                            cancelButtonText: '取消，我再想想!'
+                        }).then((result) => {
+                            if (result.value) {
+                                swal(
+                                    '删除!',
+                                    '数据删除成功！',
+                                    'success'
+                                )
+                            }
+                        })
+                    });
+                    /*************确认消息框结构*************************/
+                });
+            </script>
+
+
+
+</body>
+</html>

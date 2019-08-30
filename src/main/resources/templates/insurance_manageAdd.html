@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{'/css/bootstrap.min.css'}" rel="stylesheet" type="text/css">
+    <script th:src="@{'/js/jquery-1.12.4.js'}"></script>
+    <script th:src="@{'/js/bootstrap.min.js'}"></script>
+    <style>
+        td,th{
+            text-align: center;
+        }
+        a{
+            color: blue;
+            text-decoration: none;
+        }
+        A:hover{
+            color:Red;
+            text-decoration: none;
+        }
+        b{
+            color:Red;
+        }
+    </style>
+</head>
+<body>
+
+<Br>
+<form class="form-horizontal" role="form" method="post" th:action="@{'/saveB'}">
+    <input type="hidden" name="insurance_id" th:value="${m?.insurance_id}">
+    <div class="form-group">
+        <label for="staff_number" class="col-md-2 control-label">员工编号</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control" required="required" name="staff_number"  id="staff_number"
+                   placeholder="请输入员工编号" th:value="${m?.staff_number}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="insurance_type_id" class="col-sm-2 control-label">保险类型</label>
+        <div class="col-sm-4">
+            <select class="form-control" id="insurance_type_id" name="insurance_type_id">
+                <option value="1">养老保险</option>
+                <option value="2">养老金</option>
+                <option value="3">意外险</option>
+                <option value="4">住房公积金</option>
+
+            </select>
+            <!--<input type="text" required="required" class="form-control" id="insurance_type_id" name="insurance_type_id"-->
+                   <!--placeholder="请输入保险类型"-->
+                   <!--th:value="${m?.insurance_type_id}">-->
+        </div>
+        </div>
+        <div class="form-group">
+            <label for="insurance_number" class="col-sm-2 control-label">保险单号</label>
+            <div class="col-sm-4">
+                <input type="text" required="required" class="form-control" id="insurance_number" name="insurance_number"
+                       placeholder="请输入保险单号"
+                       th:value="${m?.insurance_number}">
+            </div>
+            </div>
+            <div class="form-group">
+                <label for="insurance_date" class="col-sm-2 control-label">登记时间</label>
+                <div class="col-sm-4">
+                    <input type="date" class="form-control" id="insurance_date" name="insurance_date"  th:value="${m?.insurance_date}">
+                </div>
+            </div>
+                <div class="form-group">
+                    <label for="insurance_person" class="col-sm-2 control-label">个人支付金额</label>
+                    <div class="col-sm-4">
+                        <input type="text" required="required" class="form-control" id="insurance_person" name="insurance_person"
+                               placeholder="请输入个人支付金额"
+                               th:value="${m?.insurance_person}">
+                    </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="insurance_company" class="col-sm-2 control-label">单位支付金额</label>
+                        <div class="col-sm-4">
+                            <input type="text" required="required" class="form-control" id="insurance_company" name="insurance_company"
+                                   placeholder="请输入单位支付金额"
+                                   th:value="${m?.insurance_company}">
+                        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-4">
+            <button type="submit" class="btn btn-success">提交</button>
+            <button type="reset" class="btn btn-toolbar">重置</button>
+            <button type="button" onclick="history.back()" class="btn btn-info">返回</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>
