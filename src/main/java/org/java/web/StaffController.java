@@ -39,8 +39,8 @@ public class StaffController {
             //如果没有指定当前页,则默认为第1页;
             page = 1;
         }
-        //每页显示1条数据
-        int rows = 1;
+        //每页显示3条数据
+        int rows = 3;
         //得到数据的总条数
         int count = service.staffGetCount();
         //最大页数
