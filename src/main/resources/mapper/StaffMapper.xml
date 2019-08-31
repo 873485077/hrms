@@ -42,6 +42,11 @@
         where staff_number = #{staff_number}
     </update>
 
+    <!--删除员工-->
+    <delete id="staffDelete" parameterType="int">
+        delete from hr_staff_info where staff_number = #{staff_number}
+    </delete>
+
     <!--查看合同-->
     <select id="contractFind" resultType="map">
         SELECT d.contract_id,contract_name,staff_name,department_name,contract_status,contract_official,staff_number

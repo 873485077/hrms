@@ -39,8 +39,8 @@ public class StaffController {
             //如果没有指定当前页,则默认为第1页;
             page = 1;
         }
-        //每页显示1条数据
-        int rows = 1;
+        //每页显示3条数据
+        int rows = 3;
         //得到数据的总条数
         int count = service.staffGetCount();
         //最大页数
@@ -53,35 +53,41 @@ public class StaffController {
         model.addAttribute("rows", rows);
         model.addAttribute("count", count);
         model.addAttribute("maxPage", maxPage);
-        return "/main";
+        return "/staff/main";
     }
 
     @RequestMapping("/staff_detail/{staff_number}")
     public String staffDetail(Model model, @PathVariable("staff_number") int staff_number){
         List<Map> list = service.staffDetail(staff_number);
         model.addAttribute("list",list);
-        return "/staff_detail";
+        return "/staff/staff_detail";
     }
 
     @RequestMapping("/staff_add")
     public String staffAdd(@RequestParam Map map){
         service.staffAdd(map);
-        return "redirect:/init";
+        return "redirect:/staff_find";
     }
 
     @RequestMapping("/update_staff/{staff_number}")
     public String updateStaff(Model model, @PathVariable("staff_number") int staff_number){
         Map m = service.updateStaff(staff_number);
         model.addAttribute("m",m);
-        return "/staff_update";
+        return "/staff/staff_update";
     }
 
     @RequestMapping("/staff_update")
     public String staffUpdate(@RequestParam Map map){
         service.staffUpdate(map);
-        return "redirect:/init";
+        return "redirect:/staff_find";
     }
 
+
+    @RequestMapping("/staff_delete/{staff_number}")
+    public String staffDelete(@PathVariable("staff_number") int staff_number){
+        service.staffDelete(staff_number);
+        return "redirect:/staff_find";
+    }
 
     @RequestMapping(value = {"/contract_find","contract_find/{page}"})
     public String contractFind(Model model, @PathVariable(value = "page", required = false) Integer page){
@@ -105,14 +111,14 @@ public class StaffController {
         model.addAttribute("maxPage", maxPage);
 
 
-        return "/contract_find";
+        return "/staff/contract_find";
     }
 
     @RequestMapping("/contract_detail/{staff_number}")
     public String contractDetail(Model model, @PathVariable("staff_number") int staff_number){
         List<Map> list = service.contractDetail(staff_number);
         model.addAttribute("list",list);
-        return "/contract_detail";
+        return "/staff/contract_detail";
     }
 
     @RequestMapping(value = {"/demission_find","demission_find/{page}"})
@@ -136,7 +142,7 @@ public class StaffController {
         model.addAttribute("count", count);
         model.addAttribute("maxPage", maxPage);
 
-        return "/demission_find";
+        return "/staff/demission_find";
     }
 
 
@@ -144,7 +150,7 @@ public class StaffController {
     public String demissionDetail(Model model, @PathVariable("staff_number") int staff_number){
         List<Map> list = service.demissionDetail(staff_number);
         model.addAttribute("list",list);
-        return "/demission_detail";
+        return "/staff/demission_detail";
     }
 
 }

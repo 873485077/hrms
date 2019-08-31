@@ -22,7 +22,8 @@
             <td>
                 <a th:href="@{|/staff_detail/${k.staff_number}|}" class="btn btn-sm btn-success">查看</a>
                 <a th:href="@{|/update_staff/${k.staff_number}|}" class="btn btn-sm bg-primary">修改</a>
-                <a th:href="@{'/forward/staff_add'}" class="btn btn-sm btn-warning">添加</a>
+                <a th:href="@{'/forward/staff/staff_add'}" class="btn btn-sm btn-warning">添加</a>
+                <a th:href="@{|/staff_delete/${k.staff_number}|}"class="btn btn-sm bg-danger"  onclick="return confirm('你确定要删除吗')">删除</a>
             </td>
         </tr>
         <tr>

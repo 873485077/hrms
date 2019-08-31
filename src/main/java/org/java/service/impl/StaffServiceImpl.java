@@ -53,6 +53,12 @@ public class StaffServiceImpl implements StaffService {
         mapper.staffUpdate(map);
     }
 
+    @Transactional
+    @Override
+    public void staffDelete(int staff_number){
+        mapper.staffDelete(staff_number);
+    }
+
     @Override
     public List<Map> contractFind(int page, int rows) {
         int start = (page-1)*rows;
