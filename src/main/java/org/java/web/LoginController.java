@@ -4,7 +4,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +29,7 @@ public class LoginController {
         Subject subject = SecurityUtils.getSubject();
         Map map = (Map) subject.getPrincipal();
         session.setAttribute("user",map);
+        session.setAttribute("username",map.get("username"));
         return "/index";
     }
 

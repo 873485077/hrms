@@ -16,9 +16,7 @@ public interface DepartmentService {
 
     /**
      * 查询人员需求征集表
-     * @param page
-     * @param rows
-     * @return
+     * @paramzeturn
      */
     List<StaffDemand> getStaffDemand(int page, int rows);
     int getStaffDemandCount();

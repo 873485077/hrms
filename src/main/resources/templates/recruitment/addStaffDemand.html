@@ -18,7 +18,7 @@
 <!-- 招聘计划申请 添加的页面 -->
 
 
-<form class="layui-form layui-form-pane" th:action="${'/addStaffDemand/commit/{mode}'}" method="post"  lay-filter="example">
+<form class="layui-form layui-form-pane" th:action="@{|/addStaffDemand/commit/${mode}|}" method="post" id="example" lay-filter="example">
     <div class="layui-form-item "  style="width: 817px">
         <label class="layui-form-label">征集主题</label>
         <div class="layui-input-block">
@@ -30,7 +30,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">招聘部门</label>
             <div class="layui-input-inline"  style="width: 190px">
-                <select name="department" lay-verify="required" lay-search="">
+                <select id="department" name="department" lay-verify="required" lay-search="">
                     <option value="">直接选择或搜索选择</option>
                     <option value="1">财务部</option>
                     <option value="2">人力资源部</option>
@@ -43,7 +43,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">招聘职务</label>
             <div class="layui-input-inline" style="width: 190px">
-                <select name="dutyId" lay-verify="required" lay-search="">
+                <select id="dutyId" name="dutyId" lay-verify="required" lay-search="">
                     <option value="">直接选择或搜索选择</option>
                     <option value="1">普通职员</option>
                     <option value="2">部门经理</option>
@@ -65,7 +65,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">招聘方式</label>
             <div class="layui-input-inline">
-                <select name="recruitWay" lay-verify="required" lay-search="">
+                <select id="recruitWay" name="recruitWay" lay-verify="required" lay-search="">
                     <option value="">直接选择或搜索选择</option>
                     <option value="内部招聘">内部招聘</option>
                     <option value="广告媒体">广告媒体</option>
@@ -129,8 +129,10 @@
 
 <script th:src="@{'/layui/layui.js'}" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
-<script>
-    layui.use(['form', 'layedit', 'laydate'], function(){
+<script type="text/javascript" th:inline="javascript">
+    layui.use(
+        ['form', 'layedit', 'laydate'],
+        function(){
         var form = layui.form
             ,layer = layui.layer
             ,layedit = layui.layedit
@@ -138,46 +140,29 @@
         //富文本
         //layedit.build('text');
         //日期
-        laydate.render({
+        laydate.render(
+            {
             elem: '#date'
             ,trigger: 'click'
-        });
-        laydate.render({
+            }
+        );
+        laydate.render(
+            {
             elem: '#date1'
             ,trigger: 'click'
-        });
-
-        //创建一个编辑器
-        var editIndex = layedit.build('LAY_demo_editor');
-
-        //自定义验证规则
-        form.verify({
-            title: function(value){
-                if(value.length < 5){
-                    return '标题至少得5个字符啊';
-                }
             }
-            ,pass: [
-                /^[\S]{6,12}$/
-                ,'密码必须6到12位，且不能出现空格'
-            ]
-            ,content: function(value){
-                layedit.sync(editIndex);
-            }
-        });
-
-        //监听指定开关
-        form.on('switch(switchTest)', function(data){
-            layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
-                offset: '6px'
-            });
-            layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
-        });
-
-        /*//监听提交
+        );
+        //监听提交
         form.on('submit(demo1)', function(data){
-            $.ajax({
-                url:[[@{/addStaffDemand}]],
+
+            window.parent.location.reload();//刷新父页面
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            parent.layer.close(index);//关闭页面
+        });
+        /* - //监听提交
+        form.on('submit(demo1)', function(data){
+            $.ajax( {
+                url:  ,
                 method:'post',
                 data:data.field,
                 dataType:'JSON',
@@ -185,17 +170,17 @@
                     //数据返回
                     alert(res);
                 }
-            })
+            } )
 
             layer.alert(JSON.stringify(data.field), {
                 title: '最终的提交信息'
-            })
+            } )
             return false;
         });*/
 
         //表单初始赋值
 
-        /*form.val('example', {
+        form.val('example', {
             "demandTitle":"这是一条征集的主题 000"
             ,"department":1
             ,"dutyId":1
@@ -208,7 +193,7 @@
             ,"jobRequire":"岗位要求测试0002"
             ,"jobContent":"内容明细测试0002"
             ,"remark":"备注信息测试0001"
-        })*/
+        })
 
 
     });

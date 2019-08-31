@@ -44,9 +44,9 @@ public class StaffDemandController {
     /**
      * 添加员工需求征集审核表
      */
-    @RequestMapping("/addStaffDemand/commit/{mode}")
-    public String addStaffDemand(@RequestParam Map map,HttpSession session,@PathVariable("mode") String mode){
-        System.out.println("addStaffDemand-"+mode);
+    @RequestMapping("/addStaffDemand/commit/{mode1}")
+    public String addStaffDemand(@RequestParam Map map,HttpSession session,@PathVariable("mode1") String mode1){
+        System.out.println("addStaffDemand-"+mode1);
         //通过service层实现 1/启动流程实例 2/向数据表添加一条业务数据
         //获取用户名,create_user是数据表对应的字段
         String createUser = (String) session.getAttribute("username");
@@ -55,8 +55,9 @@ public class StaffDemandController {
         String salary_range = map.get("salary_min") + "-" + map.get("salary_max");
         map.put("salaryRange", salary_range);
 
-        switch (mode){
+        switch (mode1){
             case "add":
+                System.out.println("add 准备添加");
                 int staffDemandCount = service.createStaffDemand(map);//调用service层
                 if (staffDemandCount>0){
                     System.out.println("添加员工需求征集审核表 - 成功");

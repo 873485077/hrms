@@ -31,10 +31,10 @@
         <li class="layui-this"> <i class="layui-icon">&#xe6b2;</i>送审中</li>
         <li> <i class="layui-icon">&#xe605;</i>审批完成</li>
         <div class="layui-layout-right" id="layer-btn">
-            <button data-method="offset" data-type="auto" class="layui-btn layui-btn-normal layui-btn-sm">
+            <button data-method="tiAdd" data-type="auto" class="layui-btn layui-btn-normal layui-btn-sm">
                 <i class="layui-icon">&#xe608;</i>增加
             </button>
-            <button type="button" class="layui-btn layui-btn-sm layui-btn-danger">
+            <button data-method="tiDel" type="button" class="layui-btn layui-btn-sm layui-btn-danger">
                 <i class="layui-icon">&#xe640;</i>删除
             </button>
             <button type="button" class="layui-btn layui-btn-sm layui-btn-normal">
@@ -68,6 +68,7 @@
 
 <script th:src="@{'/layui/layui.js'}" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<!--标题栏左侧工具栏模板：-->
 <script type="text/javascript" th:inline="none">
     layui.use(['form', 'layedit', 'laydate','element','table','layer'], function(){
         var form = layui.form
@@ -128,9 +129,9 @@
             ]
         });
 
-        //添加按钮 触发事件
+
         var active = {
-            offset: function(othis){
+            tiAdd: function(othis){    //添加按钮 触发事件
                 var type = othis.data('type')
                     ,text = othis.text();
 
@@ -148,7 +149,13 @@
 
                     }
                 });
+            },
+            tiDel: function(othis){  //删除按钮  触发事件
+                var checkStatus = table.checkStatus('idTest')
+                    ,data = checkStatus.data;
+                layer.alert(JSON.stringify(data));
             }
+
         };
         $('#layer-btn .layui-btn').on('click', function(){
             var othis = $(this), method = othis.data('method');
@@ -174,29 +181,30 @@
                     content: '/addStaffDemand/'+layEvent,
                     zIndex: layer.zIndex, //重点1
                     success: function (layero) {
+
                         layer.setTop(layero); //重点2
-                        /**查看**弹出新窗体后, 给新窗体的控件赋值**/
-                            //获得弹出层页面的主体部分 body
-                        var body = layui.layer.getChildFrame("body");
+                        //*查看**弹出新窗体后, 给新窗体的控件赋值
+                        //获得弹出层页面的主体部分 body
+                        var body = layer.getChildFrame("body");
+                        var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+
                         //给弹出层body部分的表单控件赋值 / 选择器["name属性='属性值']"]
+                        body.find("#department").val(data.department_id); //部门data.department_name
+                        body.find("#dutyId").val(data.duty_id); //职务data.department_name
+                        body.find("#recruitWay").val(data.recruit_way); //招聘方式
+
                         body.find("[name='demandTitle']").val(data.demand_title); //标题
                         body.find("[name='demandAmount']").val(data.demand_amount); //人数
                         var arr = data.salary_range.split("-"); //薪资拆分
                         body.find("[name='salary_min']").val(arr[0]); //薪资min
                         body.find("[name='salary_max']").val(arr[1]); //薪资max
-
                         body.find("[name='startDate']").val(format(data.start_date,"yyyy-MM-dd")); //开始时间
                         body.find("[name='finishDate']").val(format(data.finish_date,"yyyy-MM-dd")); //结束时间
                         body.find("[name='jobRequire']").val(data.job_require); //岗位要求
                         body.find("[name='jobContent']").val(data.job_content); //内容明细
                         body.find("[name='remark']").val(data.remark); //备注
-                        form.render('select');
-                        body.find("[name='department']").val(data.department_id); //部门data.department_name
-                        body.find("[name='dutyId']").val(data.duty_id); //职务data.department_name
-                        body.find("[name='recruitWay']").val(data.recruit_way); //招聘方式
 
                     }
-
                 })
             } else if (layEvent === 'del') { //删除
                 layer.confirm('真的删除行么', function (index) {
@@ -244,7 +252,6 @@
 
     });
 </script>
-<!--标题栏左侧工具栏模板：-->
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
         <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" lay-event="add">
