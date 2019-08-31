@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.java.dao.Insurance_typeMapper">
+    <select id="findInsurance_typeMapper" resultType="map">
+        select * from insurance_type limit #{start},#{rows}
+    </select>
+
+    <select id="getCount" resultType="int">
+        select count(*) from insurance_type
+    </select>
+
+    <insert id="add" parameterType="map">
+        insert into insurance_type values (null,#{insurance_type},#{insurance_period},#{insurance_money})
+    </insert>
+
+    <select id="findById" resultType="map">
+        select * from insurance_type where insurance_type_id=#{insurance_type_id}
+    </select>
+
+    <update id="update" parameterType="map">
+        update insurance_type set insurance_type=#{insurance_type},insurance_period=#{insurance_period},insurance_money=#{insurance_money} where insurance_type_id=#{insurance_type_id}
+    </update>
+
+    <delete id="del" parameterType="int">
+        delete from insurance_type where insurance_type_id=#{insurance_type_id}
+    </delete>
+</mapper>

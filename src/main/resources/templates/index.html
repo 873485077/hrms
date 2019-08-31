@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Title</title>
-    <link th:href="@{'/layui/css/layui.css'}" type="text/css" rel="stylesheet">
+    <link th:href="@{'/css/layui.css'}" type="text/css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{'/css/index.css'}" media="all" />
-
+    <script src="/js/jquery-1.12.4.js"></script>
+    <script src="/js/layui.js"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -33,7 +34,7 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    [[${session.username}]]
+                    [[${session.user.username}]]
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">基本资料</a></dd>
@@ -111,8 +112,8 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">薪资福利</a>
                     <dl class="layui-nav-child">
-                        <dd><a th:href="@{'/forward/right'}" target="right">列表一</a></dd>
-                        <dd><a th:href="@{'/forward/right'}" target="right">列表二</a></dd>
+                        <dd><a th:href="@{'/forward/Tax'}" target="right">薪资计算</a></dd>
+                        <dd><a th:href="@{'/insurance_type'}" target="right">保险类型</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">

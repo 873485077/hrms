@@ -12,6 +12,9 @@
 	<link rel="icon" href="/favicon.ico">
 	<link rel="stylesheet" th:href="@{'/layui/css/layui.css'}" media="all" />
 	<link rel="stylesheet" th:href="@{'/css/public.css'}" media="all" />
+	<link th:href="@{'/css/layui.css'}" type="text/css" rel="stylesheet">
+	<script th:src="@{'/js/jquery-1.12.4.js'}"></script>
+	<script th:src="@{'/js/layui.js'}"></script>
 </head>
 <body class="loginBody" style="-moz-background-size: 120%; background-size: 120%;">
 	<form class="layui-form" method="post" th:action="@{'/login'}">
@@ -26,11 +29,7 @@
 			<label for="password">密码</label>
 			<input type="password" placeholder="请输入密码" autocomplete="off" name="password" id="password" class="layui-input" lay-verify="required">
 		</div>
-		<div class="layui-form-item input-item" id="imgCode">
-			<label for="code">验证码（未实现）</label>
-			<input type="text" placeholder="请输入验证码（未实现）" autocomplete="off" id="code" class="layui-input">
-			<!--<img src="/images/code.jpg">-->
-		</div>
+
 		<div class="layui-form-item">
 			<input type="submit" class="layui-btn layui-block" lay-filter="login" lay-submit></input>
 		</div>
@@ -43,5 +42,18 @@
 	<script type="text/javascript" th:src="@{'/layui/layui.js'}"></script>
 	<script type="text/javascript" th:src="@{'/js/login.js'}"></script>
 	<script type="text/javascript" th:src="@{'/js/cache.js'}"></script>
+
+	<script th:inline="javascript">
+        layui.use(['layer'],function(){
+            var layer= layui.layer;
+
+			if ([[${msg}]] != null) {
+                layer.msg('[[${msg}]]',{
+                    time: 1000
+                });
+			}
+
+        });
+	</script>
 </body>
 </html>

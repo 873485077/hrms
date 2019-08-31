@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.java.dao.Insurance_manageMapper">
+    <select id="findinsurance_manage" resultType="map">
+SELECT insurance_id, staff_name,insurance_type,insurance_number,insurance_date,insurance_person,insurance_company,c.staff_number FROM
+	hr_staff_info a,insurance_type b,insurance_manage c
+	WHERE a.staff_number = c.staff_number
+	AND b.insurance_type_id = c.insurance_type_id limit #{startB},#{rowsB}
+    </select>
+    
+    <select id="getCount" resultType="int">
+        select count(*) from insurance_manage
+    </select>
+
+    <insert id="add" parameterType="map">
+        insert into insurance_manage values (null,#{staff_number},#{insurance_type_id},#{insurance_number},
+                                              #{insurance_date},#{insurance_person},#{insurance_company})
+    </insert>
+
+    <!---->
+
+    <select id="findById" resultType="map">
+        select * from insurance_manage where insurance_id=#{insurance_id}
+    </select>
+
+    <update id="update" parameterType="map">
+        update insurance_manage set staff_number=#{staff_number},insurance_type_id=#{insurance_type_id},insurance_number=#{insurance_number},insurance_date=#{insurance_date},insurance_person=#{insurance_person},insurance_company=#{insurance_company} where insurance_id=#{insurance_id}
+    </update>
+
+    <delete id="del" parameterType="int">
+        delete from insurance_manage where insurance_id=#{insurance_id}
+    </delete>
+</mapper>

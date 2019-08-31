@@ -18,13 +18,13 @@ public class WebConfig implements WebMvcConfigurer {
     /**
      * 该方法,用于指定,发出什么请求名称时,进行哪一个视图页面
      * @param registry
-     */
+
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         System.out.println("~进入WebConfig.java~");
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/backIndex").setViewName("index");
-    }
+    }*/
 
     /**
      * 配置拦截器,并且指定进入拦截器的规则
